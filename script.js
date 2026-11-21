@@ -91,6 +91,7 @@ function renderCharacters() {
       : `<div class="portrait-placeholder">${safeText(character.name).split(" ")[0]}<small>PORTRAIT / ${String(index + 1).padStart(2, "0")}</small></div>`;
     card.innerHTML = `
       <div class="card-art">${art}</div>
+      <div class="card-glare"></div>
       <div class="card-topline"><span>RECORD / ${character.id}</span><span>● ACTIVE</span></div>
       <div class="card-info">
         <div class="card-role">${safeText(character.role, "ARCHIVE SUBJECT")}</div>
@@ -99,6 +100,15 @@ function renderCharacters() {
         <div class="card-bottom"><span>VIEW PROFILE</span><span class="card-arrow">↗</span></div>
       </div>`;
     card.addEventListener("click", () => openCharacter(character));
+    card.addEventListener("pointermove", (event) => {
+      const rect = card.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width;
+      const y = (event.clientY - rect.top) / rect.height;
+      card.style.transform = `perspective(900px) rotateY(${((x - 0.5) * 10).toFixed(2)}deg) rotateX(${((0.5 - y) * 8).toFixed(2)}deg) translateY(-7px)`;
+      card.style.setProperty("--mx", `${(x * 100).toFixed(1)}%`);
+      card.style.setProperty("--my", `${(y * 100).toFixed(1)}%`);
+    });
+    card.addEventListener("pointerleave", () => { card.style.transform = ""; });
     grid.appendChild(card);
   });
 }
@@ -144,6 +154,8 @@ function renderProfile(character) {
     item.innerHTML = `<div class="detail-label">${label}</div><div class="detail-value"></div>`;
     item.querySelector(".detail-value").textContent = safeText(value);
     detailGrid.appendChild(item);
+    if (revealObserver) revealObserver.observe(item);
+    else item.classList.add("inview");
   });
 }
 
@@ -207,3 +219,56 @@ renderCharacters();
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") menuOverlay.classList.remove("open");
 });
+
+/* intro */
+const introOverlay = $("#introOverlay");
+function finishIntro() {
+  if (!introOverlay || introOverlay.dataset.done) return;
+  introOverlay.dataset.done = "1";
+  document.body.classList.add("intro-done");
+  introOverlay.classList.add("intro-hide");
+  window.setTimeout(() => introOverlay.remove(), 650);
+}
+window.setTimeout(finishIntro, 2350);
+if (introOverlay) introOverlay.addEventListener("click", finishIntro);
+
+/* scroll reveal for profile details */
+const revealObserver = ("IntersectionObserver" in window)
+  ? new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("inview");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 })
+  : null;
+
+/* afterimage trail marks */
+let lastGhost = 0;
+function spawnMark(x, y, className) {
+  const mark = document.createElement("span");
+  mark.className = className;
+  mark.style.left = `${x}px`;
+  mark.style.top = `${y}px`;
+  document.body.appendChild(mark);
+  window.setTimeout(() => mark.remove(), 900);
+}
+document.addEventListener("pointerdown", (event) => {
+  spawnMark(event.clientX, event.clientY, "trail-mark");
+});
+if (window.matchMedia("(pointer: fine)").matches) {
+  document.addEventListener("pointermove", (event) => {
+    const now = performance.now();
+    if (now - lastGhost < 55) return;
+    lastGhost = now;
+    spawnMark(event.clientX, event.clientY, "ghost-dot");
+  });
+}
+
+/* profile portrait parallax */
+window.addEventListener("scroll", () => {
+  if (!profileScreen.classList.contains("is-active")) return;
+  const img = profileScreen.querySelector(".visual-placeholder img");
+  if (img) img.style.transform = `translateY(${Math.min(window.scrollY * 0.05, 28).toFixed(1)}px) scale(1.06)`;
+}, { passive: true });
