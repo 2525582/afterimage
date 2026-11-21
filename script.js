@@ -68,26 +68,10 @@ const characters = [
     relationships: "アルマとは双子の妹。幼い頃は互いに支え合い、何をするにも一緒だった。アルマのことを大切に思っていたが、力が弱まってからは距離を感じるようになってしまう。アルマが自分にどのような感情を抱いていたのか、最後まで知ることはなかった。",
     image: "images/noel.jpg"
   },
-  {
-    id: "005",
-    name: "UNKNOWN",
-    reading: "未登録 / —",
-    color: "#64748b",
-    role: "UNREGISTERED SUBJECT",
-    quote: "“The next story has not been written yet.”",
-    appearance: "外見情報は未登録です。",
-    personality: "性格情報は未登録です。",
-    background: "生い立ち情報は未登録です。",
-    ability: "能力情報は未登録です。",
-    likes: "—",
-    dislikes: "—",
-    relationships: "関係性は未登録です。",
-    image: ""
-  }
 ];
 
 const viewedSet = new Set((() => {
-  try { return JSON.parse(localStorage.getItem("afterimage-viewed") || "[]"); }
+  try { return JSON.parse(localStorage.getItem("afterimage-viewed") || "[]").filter((id) => characters.some((character) => character.id === id)); }
   catch (error) { return []; }
 })());
 function updateSync() {
