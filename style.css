@@ -75,3 +75,12 @@ html{scrollbar-color:#2b2f36 #0a0b0d}
 .menu-close{transition:color .25s}
 .menu-close:hover{color:var(--red-bright)}
 @media(max-width:800px){.screen-entry:before{font-size:31vw;bottom:13vh}.menu-overlay:before{font-size:34vw}}
+
+/* ===== readability fixes ===== */
+.entry-index{bottom:122px}
+.card-name{color:#f4f6f9;text-shadow:0 2px 16px rgba(0,0,0,.75),0 0 2px rgba(0,0,0,.6)}
+.card-role{color:#ff8b96;text-shadow:0 1px 8px rgba(0,0,0,.8)}
+.card-reading{color:#c3c9d2;text-shadow:0 1px 8px rgba(0,0,0,.85)}
+.card-topline{text-shadow:0 1px 8px rgba(0,0,0,.8)}
+.card-bottom{color:#bcc3cd;text-shadow:0 1px 8px rgba(0,0,0,.85)}
+.portrait-placeholder{color:rgba(235,238,243,.22)}
