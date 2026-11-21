@@ -18,7 +18,7 @@ const characters = [
     likes: "紅茶、読書、努力が報われる瞬間",
     dislikes: "妥協、無礼な態度、負けること",
     relationships: "ここに他キャラクターとの関係性を記入してください。",
-    image: ""
+    image: "images/shiori.jpg"
   },
   {
     id: "002",
@@ -34,7 +34,7 @@ const characters = [
     likes: "ここに好きなものを記入してください。",
     dislikes: "ここに嫌いなものを記入してください。",
     relationships: "ここに他キャラクターとの関係性を記入してください。",
-    image: ""
+    image: "images/ibara.jpg"
   },
   {
     id: "003",
