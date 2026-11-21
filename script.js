@@ -117,6 +117,7 @@ const quotesScreen = $("#quotesScreen");
 const galleryScreen = $("#galleryScreen");
 const aboutScreen = $("#aboutScreen");
 const worldScreen = $("#worldScreen");
+const promptsScreen = $("#promptsScreen");
 const wipe = $("#transitionWipe");
 let currentCharacter = null;
 let transitionLock = false;
@@ -281,7 +282,7 @@ document.querySelectorAll("[data-home]").forEach((el) => el.addEventListener("cl
 const menuOverlay = $("#menuOverlay");
 $("#menuTrigger").addEventListener("click", () => menuOverlay.classList.add("open"));
 $("#menuClose").addEventListener("click", () => menuOverlay.classList.remove("open"));
-const navTargets = { entry: entryScreen, index: indexScreen, relation: relationScreen, quotes: quotesScreen, gallery: galleryScreen, world: worldScreen, about: aboutScreen };
+const navTargets = { entry: entryScreen, index: indexScreen, relation: relationScreen, quotes: quotesScreen, gallery: galleryScreen, world: worldScreen, prompts: promptsScreen, about: aboutScreen };
 screenKeys.set(entryScreen, "entry");
 screenKeys.set(indexScreen, "index");
 screenKeys.set(profileScreen, "index");
@@ -289,6 +290,7 @@ screenKeys.set(relationScreen, "relation");
 screenKeys.set(quotesScreen, "quotes");
 screenKeys.set(galleryScreen, "gallery");
 screenKeys.set(worldScreen, "world");
+screenKeys.set(promptsScreen, "prompts");
 screenKeys.set(aboutScreen, "about");
 menuOverlay.querySelectorAll("[data-nav]").forEach((button) => button.addEventListener("click", () => {
   menuOverlay.classList.remove("open");
@@ -297,6 +299,7 @@ menuOverlay.querySelectorAll("[data-nav]").forEach((button) => button.addEventLi
   if (key === "index") renderCharacters();
   if (key === "quotes") renderQuotes();
   if (key === "gallery") renderGallery();
+  if (key === "prompts") renderPrompts();
   if (key === "about") updateAbout();
   runTransition(key === "entry" ? "back" : "open", () => setScreen(target));
 }));
@@ -510,3 +513,69 @@ if (resetViewedBtn) resetViewedBtn.addEventListener("click", () => {
   renderCharacters();
   playBackSound();
 });
+
+/* ===== prompt library ===== */
+const promptEntries = [
+  {
+    title: "立ち絵プロンプトを作る",
+    use: "新しいキャラの立ち絵が欲しい時",
+    text: "あなたはAIイラスト生成のプロンプト作成の専門家です。PixAIで使う、キャラクターの立ち絵用プロンプトを作ってください。条件：[性別・年齢層]、髪は[色と長さ]、目は[色]、服装は[服装の説明]、雰囲気は[雰囲気]。出力は英語のタグ形式でカンマ区切り、品質タグ（masterpiece, best qualityなど）は先頭に置いてください。最後にネガティブプロンプトも別に書いてください。"
+  },
+  {
+    title: "表情差分を作る",
+    use: "同じキャラで表情だけ変えたい時",
+    text: "PixAI用の表情差分プロンプトを作ってください。ベースのキャラタグは [ここにベースのプロンプトを貼る] です。表情だけを [笑顔 / 怒り / 照れ / 泣き顔 など] に変えたタグ一式と、変えてはいけない固定タグの一覧を、分けて出力してください。"
+  },
+  {
+    title: "衣装チェンジ",
+    use: "キャラはそのまま、服だけ変えたい時",
+    text: "このキャラクターの衣装だけを変更したいです。外見の固定タグはそのままにして、衣装タグだけを [新しい衣装の説明] に差し替えた、PixAI用プロンプトの全文を出力してください。変更した箇所には印をつけてください。元のプロンプト：[ここに貼る]"
+  },
+  {
+    title: "背景ありの一枚絵",
+    use: "場面のあるイラストを作りたい時",
+    text: "PixAIで背景ありのイラストを作ります。キャラタグは [ここに貼る]。場面は [場所・時間帯・天気] です。キャラのタグと背景のタグを分けて説明したあと、最後に合成した全文プロンプトを英語タグ形式で出力してください。"
+  },
+  {
+    title: "設定画風に作る",
+    use: "キャラ設定画っぽい画像が欲しい時",
+    text: "キャラクター設定画のような画像を作るための、PixAI用プロンプトを作ってください。全身・正面・無地の背景・表情は通常でお願いします。キャラの特徴は [特徴を書く]。英語タグ形式で出力し、ネガティブプロンプトもつけてください。"
+  },
+  {
+    title: "プロンプトの添削・整理",
+    use: "タグがぐちゃぐちゃになってきた時",
+    text: "次のPixAI用プロンプトを添削してください。重複したタグの削除、矛盾するタグの指摘、足りない品質タグの追加をして、整えた全文を出力してください。指摘した箇所は理由も一言つけてください。プロンプト：[ここに貼る]"
+  },
+  {
+    title: "日本語の説明をタグ化する",
+    use: "頭の中のイメージをそのまま渡したい時",
+    text: "次の日本語のイメージ説明を、PixAIで使える英語タグ形式のプロンプトに変換してください。タグは重要度順に並べ、最後にネガティブプロンプトも提案してください。説明：[イメージを日本語で書く]"
+  }
+];
+function renderPrompts() {
+  const list = $("#promptsList");
+  if (!list) return;
+  list.innerHTML = "";
+  promptEntries.forEach((entry, i) => {
+    const card = document.createElement("article");
+    card.className = "prompt-card";
+    card.innerHTML = `<div class="prompt-head"><span class="prompt-no">P-${String(i + 1).padStart(2, "0")}</span><h3>${entry.title}</h3><button class="copy-btn" type="button">COPY</button></div><p class="prompt-use">${entry.use}</p><p class="prompt-text"></p>`;
+    card.querySelector(".prompt-text").textContent = entry.text;
+    const btn = card.querySelector(".copy-btn");
+    btn.addEventListener("click", async () => {
+      try { await navigator.clipboard.writeText(entry.text); }
+      catch (error) {
+        const ta = document.createElement("textarea");
+        ta.value = entry.text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        ta.remove();
+      }
+      btn.textContent = "COPIED";
+      btn.classList.add("copied");
+      window.setTimeout(() => { btn.textContent = "COPY"; btn.classList.remove("copied"); }, 1400);
+    });
+    list.appendChild(card);
+  });
+}

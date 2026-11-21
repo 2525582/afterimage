@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Mono:wght@400;500&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=7">
+  <link rel="stylesheet" href="style.css?v=8">
 </head>
 <body>
   <div class="intro" id="introOverlay" aria-hidden="true">
@@ -158,14 +158,24 @@
         <footer class="screen-footer"><span>AFTERIMAGE ARCHIVE</span><span>END OF WORLD</span></footer>
       </section>
 
+      <section class="screen screen-sub" id="promptsScreen" aria-hidden="true">
+        <div class="section-heading">
+          <div><p class="eyebrow"><span class="eyebrow-line"></span> PROMPT LIBRARY / 06</p><h2>PROM<em>PTS</em></h2></div>
+          <p class="section-note">FOR PixAI CREATORS<br><span>ChatGPT指示プロンプト図鑑</span></p>
+        </div>
+        <p class="prompts-lead">PixAIで絵を作る人のための、ChatGPTへの指示文コレクション。使いたいものをコピーして、[ ] の中を自分のキャラに書き換えるだけ。</p>
+        <div class="prompts-list" id="promptsList"></div>
+        <footer class="screen-footer"><span>AFTERIMAGE ARCHIVE</span><span>END OF PROMPTS</span></footer>
+      </section>
+
       <section class="screen screen-sub" id="aboutScreen" aria-hidden="true">
         <div class="section-heading">
-          <div><p class="eyebrow"><span class="eyebrow-line"></span> ABOUT THIS ARCHIVE / 06</p><h2>AB<em>OUT</em></h2></div>
+          <div><p class="eyebrow"><span class="eyebrow-line"></span> ABOUT THIS ARCHIVE / 07</p><h2>AB<em>OUT</em></h2></div>
           <p class="section-note">WHAT IS AFTERIMAGE<br><span>このサイトについて</span></p>
         </div>
         <div class="about-body">
           <p class="about-lead">CHARACTER ARCHIVE — AFTERIMAGE</p>
-          <p class="about-text">ぱすの創作キャラクターを記録する、個人アーカイブ。存在した証は、残像としてここに残り続ける。</p>
+          <p class="about-text">ぱんだの創作キャラクターを記録する、個人アーカイブ。存在した証は、残像としてここに残り続ける。</p>
           <div class="about-stats">
             <div><span>RECORDS</span><b id="aboutCount">05</b></div>
             <div><span>ARCHIVE SYNC</span><b id="aboutSync">0%</b></div>
@@ -194,11 +204,12 @@
         <button data-nav="quotes"><span class="m-num">03</span><span class="m-main">QUOTES<small>セリフ集</small></span><span class="m-meta">05 VOICES</span><span class="m-tag">OPEN</span></button>
         <button data-nav="gallery"><span class="m-num">04</span><span class="m-main">GALLERY<small>ギャラリー</small></span><span class="m-meta">05 FRAMES</span><span class="m-tag">OPEN</span></button>
         <button data-nav="world"><span class="m-num">05</span><span class="m-main">WORLD<small>世界観</small></span><span class="m-meta">READ</span><span class="m-tag">OPEN</span></button>
-        <button data-nav="about"><span class="m-num">06</span><span class="m-main">ABOUT<small>このサイトについて</small></span><span class="m-meta">INFO</span><span class="m-tag">OPEN</span></button>
+        <button data-nav="prompts"><span class="m-num">06</span><span class="m-main">PROMPTS<small>プロンプト図鑑</small></span><span class="m-meta">07 ENTRIES</span><span class="m-tag">OPEN</span></button>
+        <button data-nav="about"><span class="m-num">07</span><span class="m-main">ABOUT<small>このサイトについて</small></span><span class="m-meta">INFO</span><span class="m-tag">OPEN</span></button>
       </nav>
       <p class="menu-foot">AFTERIMAGE / ARCHIVE SYSTEM — SYNC <span id="menuSync">0%</span></p>
     </div>
   </div>
-  <script src="script.js?v=7"></script>
+  <script src="script.js?v=8"></script>
 </body>
 </html>

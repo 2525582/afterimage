@@ -215,3 +215,16 @@ body.glitching .site-shell{animation:bodyGlitch .45s steps(2) both}
 .term b{display:block;font-size:13px;margin-bottom:9px}
 .term p{font-size:10px;line-height:1.9;color:#9aa1ab;margin:0}
 @media(max-width:640px){.menu-overlay{padding:92px 6vw 30px}.menu-overlay nav button{grid-template-columns:40px 1fr auto;gap:11px}.menu-overlay nav button .m-tag{display:none}.menu-overlay nav button.current .m-tag{display:none}.menu-overlay nav button.current .m-meta{background:var(--red);border-color:var(--red);color:#fff}.tl-item{grid-template-columns:70px 1fr;gap:12px}}
+
+/* ===== prompt library v7 ===== */
+.prompts-lead{font-size:12px;line-height:2.1;color:#aab1bb;max-width:720px;margin:0 0 34px}
+.prompts-list{display:grid;gap:14px}
+.prompt-card{border:1px solid var(--line);background:#0d0f13;padding:22px}
+.prompt-head{display:flex;align-items:center;gap:14px}
+.prompt-no{font:700 9px var(--mono);letter-spacing:.2em;color:var(--red-bright)}
+.prompt-head h3{font-size:16px;margin:0;flex:1}
+.copy-btn{background:none;border:1px solid rgba(255,255,255,.25);color:#d5d9df;font:8px var(--mono);letter-spacing:.18em;padding:8px 13px;cursor:pointer;transition:border-color .25s,color .25s}
+.copy-btn:hover{border-color:var(--red-bright);color:var(--red-bright)}
+.copy-btn.copied{background:var(--red);border-color:var(--red);color:#fff}
+.prompt-use{font-size:10px;color:#8a919c;margin:12px 0 10px}
+.prompt-text{font-size:11px;line-height:2;color:#c4c9d1;background:rgba(255,255,255,.03);border-left:2px solid var(--red);padding:13px 15px;margin:0;white-space:pre-line}
