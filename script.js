@@ -118,6 +118,7 @@ const galleryScreen = $("#galleryScreen");
 const aboutScreen = $("#aboutScreen");
 const worldScreen = $("#worldScreen");
 const promptsScreen = $("#promptsScreen");
+const wantedScreen = $("#wantedScreen");
 const wipe = $("#transitionWipe");
 let currentCharacter = null;
 let transitionLock = false;
@@ -302,7 +303,7 @@ document.querySelectorAll("[data-home]").forEach((el) => el.addEventListener("cl
 const menuOverlay = $("#menuOverlay");
 $("#menuTrigger").addEventListener("click", () => menuOverlay.classList.add("open"));
 $("#menuClose").addEventListener("click", () => menuOverlay.classList.remove("open"));
-const navTargets = { entry: entryScreen, index: indexScreen, relation: relationScreen, quotes: quotesScreen, gallery: galleryScreen, world: worldScreen, prompts: promptsScreen, about: aboutScreen };
+const navTargets = { entry: entryScreen, index: indexScreen, wanted: wantedScreen, relation: relationScreen, quotes: quotesScreen, gallery: galleryScreen, world: worldScreen, prompts: promptsScreen, about: aboutScreen };
 screenKeys.set(entryScreen, "entry");
 screenKeys.set(indexScreen, "index");
 screenKeys.set(profileScreen, "index");
@@ -311,12 +312,14 @@ screenKeys.set(quotesScreen, "quotes");
 screenKeys.set(galleryScreen, "gallery");
 screenKeys.set(worldScreen, "world");
 screenKeys.set(promptsScreen, "prompts");
+screenKeys.set(wantedScreen, "wanted");
 screenKeys.set(aboutScreen, "about");
 menuOverlay.querySelectorAll("[data-nav]").forEach((button) => button.addEventListener("click", () => {
   menuOverlay.classList.remove("open");
   const key = button.dataset.nav;
   const target = navTargets[key] || indexScreen;
   if (key === "index") renderCharacters();
+  if (key === "wanted") { renderWanted(); document.body.classList.add("eroding"); window.setTimeout(() => document.body.classList.remove("eroding"), 240); if (soundOn) playOpenSound(); }
   if (key === "quotes") renderQuotes();
   if (key === "gallery") renderGallery();
   if (key === "prompts") renderPrompts();
@@ -841,3 +844,47 @@ entryScreen.addEventListener("pointermove", (event) => {
 document.addEventListener("keydown", (event) => {
   if (event.key === "Enter" && entryScreen.classList.contains("is-active")) $("#enterButton").click();
 });
+
+/* ===== wanted ===== */
+const wantedList = [
+  { code: "W-01", name: "NORTH", reading: "ノース", image: "images/north.jpg", threat: "UNKNOWN",
+    sighting: "紫の長い髪と紫の瞳。黒いゴシックなドレスに、白いブラウスと黒いリボン。いつも少し上から、じっとこちらを見上げている姿が目撃されている。",
+    facts: ["性別：女性", "名前以外の素性：不明", "性格・目的：不明"] },
+  { code: "W-02", name: "LULU", reading: "ルル", image: "images/lulu.jpg", threat: "UNKNOWN",
+    sighting: "緑の髪。後ろ髪だけが異様に長い。大きめの白いシャツワンピースを一枚で着ている。腰に手を当てて立つ姿が目撃されている。",
+    facts: ["性別：無性別", "名前以外の素性：不明", "性格・目的：不明"] },
+  { code: "W-03", name: "ASTRAL", reading: "アストラル", image: "images/astral.jpg", threat: "HIGH",
+    sighting: "ピンクのツインテールと、ハート型に跳ねた毛束。シスター服にハートの鍵のペンダント。瞳の中にもハートが浮かんでいる。",
+    facts: ["性別：女性", "「聖女」と呼ばれている", "恋愛好き", "記録：元恋人を殺した"] }
+];
+function renderWanted() {
+  const grid = $("#wantedGrid");
+  if (!grid) return;
+  grid.innerHTML = wantedList.map((person) => `
+    <article class="wanted-card" tabindex="0">
+      <header class="w-head"><span>CASE ${person.code}</span><span class="w-threat">危険度 ${person.threat}</span></header>
+      <h3 class="w-wanted">WANTED</h3>
+      <div class="w-photo"><img src="${person.image}" alt="${person.reading}"><span class="w-denied">NO FURTHER DATA</span></div>
+      <h4 class="w-name">${person.name}<small>${person.reading} — それ以外の名前は不明</small></h4>
+      <p class="w-label">SIGHTING REPORT — 目撃情報</p>
+      <p class="w-text">${person.sighting}</p>
+      <p class="w-label">KNOWN FACTS — 判明していること</p>
+      <ul class="w-facts">${person.facts.map((fact) => `<li>${fact}</li>`).join("")}</ul>
+      <footer class="w-foot">STATUS：未解明 — 見かけても近づかないこと</footer>
+    </article>`).join("");
+  grid.querySelectorAll(".wanted-card").forEach((card) => card.addEventListener("click", () => {
+    card.classList.add("denied");
+    document.body.classList.add("eroding");
+    window.setTimeout(() => { card.classList.remove("denied"); document.body.classList.remove("eroding"); }, 900);
+  }));
+}
+window.setInterval(() => {
+  if (document.hidden) return;
+  if (!wantedScreen.classList.contains("is-active")) return;
+  if (Math.random() > 0.35) return;
+  const photos = document.querySelectorAll(".w-photo img");
+  if (!photos.length) return;
+  const photo = photos[Math.floor(Math.random() * photos.length)];
+  photo.classList.add("haunted");
+  window.setTimeout(() => photo.classList.remove("haunted"), 170);
+}, 4500);

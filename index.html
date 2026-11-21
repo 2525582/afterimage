@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Mono:wght@400;500&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=11">
+  <link rel="stylesheet" href="style.css?v=12">
 </head>
 <body>
   <div class="intro" id="introOverlay" aria-hidden="true">
@@ -164,6 +164,16 @@
         <footer class="screen-footer"><span>AFTERIMAGE ARCHIVE</span><span>END OF WORLD</span></footer>
       </section>
 
+      <section class="screen screen-sub" id="wantedScreen" aria-hidden="true">
+        <div class="section-heading">
+          <div><p class="eyebrow"><span class="eyebrow-line"></span> UNIDENTIFIED / 02</p><h2>WANT<em>ED</em></h2></div>
+          <p class="section-note">UNIDENTIFIED SUBJECTS<br><span>正体不明の存在たち</span></p>
+        </div>
+        <p class="wanted-alert">WARNING — 詳細不明の存在を記録中。見かけても、近づかないこと。</p>
+        <div class="wanted-grid" id="wantedGrid"></div>
+        <p class="wanted-foot">IF YOU HAVE ANY INFORMATION — その存在について知っていたら、記録は更新される。</p>
+      </section>
+
       <section class="screen screen-sub" id="promptsScreen" aria-hidden="true">
         <div class="section-heading">
           <div><p class="eyebrow"><span class="eyebrow-line"></span> PROMPT LIBRARY / 06</p><h2>PROM<em>PTS</em></h2></div>
@@ -206,16 +216,17 @@
       <nav>
         <button data-nav="entry"><span class="m-num">00</span><span class="m-main">TOP<small>トップ画面</small></span><span class="m-meta">START</span><span class="m-tag">OPEN</span></button>
         <button data-nav="index"><span class="m-num">01</span><span class="m-main">CHARACTER INDEX<small>キャラ一覧</small></span><span class="m-meta">05 RECORDS</span><span class="m-tag">OPEN</span></button>
-        <button data-nav="relation"><span class="m-num">02</span><span class="m-main">RELATIONSHIP<small>相関図</small></span><span class="m-meta">02 PAIRS</span><span class="m-tag">OPEN</span></button>
-        <button data-nav="quotes"><span class="m-num">03</span><span class="m-main">QUOTES<small>セリフ集</small></span><span class="m-meta">05 VOICES</span><span class="m-tag">OPEN</span></button>
-        <button data-nav="gallery"><span class="m-num">04</span><span class="m-main">GALLERY<small>ギャラリー</small></span><span class="m-meta">05 FRAMES</span><span class="m-tag">OPEN</span></button>
-        <button data-nav="world"><span class="m-num">05</span><span class="m-main">WORLD<small>世界観</small></span><span class="m-meta">READ</span><span class="m-tag">OPEN</span></button>
-        <button data-nav="prompts"><span class="m-num">06</span><span class="m-main">PROMPTS<small>プロンプト図鑑</small></span><span class="m-meta">08 ENTRIES</span><span class="m-tag">OPEN</span></button>
-        <button data-nav="about"><span class="m-num">07</span><span class="m-main">ABOUT<small>このサイトについて</small></span><span class="m-meta">INFO</span><span class="m-tag">OPEN</span></button>
+        <button data-nav="wanted"><span class="m-num">02</span><span class="m-main">WANTED<small>指名手配</small></span><span class="m-meta">03 CASES</span><span class="m-tag">OPEN</span></button>
+        <button data-nav="relation"><span class="m-num">03</span><span class="m-main">RELATIONSHIP<small>相関図</small></span><span class="m-meta">02 PAIRS</span><span class="m-tag">OPEN</span></button>
+        <button data-nav="quotes"><span class="m-num">04</span><span class="m-main">QUOTES<small>セリフ集</small></span><span class="m-meta">05 VOICES</span><span class="m-tag">OPEN</span></button>
+        <button data-nav="gallery"><span class="m-num">05</span><span class="m-main">GALLERY<small>ギャラリー</small></span><span class="m-meta">05 FRAMES</span><span class="m-tag">OPEN</span></button>
+        <button data-nav="world"><span class="m-num">06</span><span class="m-main">WORLD<small>世界観</small></span><span class="m-meta">READ</span><span class="m-tag">OPEN</span></button>
+        <button data-nav="prompts"><span class="m-num">07</span><span class="m-main">PROMPTS<small>プロンプト図鑑</small></span><span class="m-meta">08 ENTRIES</span><span class="m-tag">OPEN</span></button>
+        <button data-nav="about"><span class="m-num">08</span><span class="m-main">ABOUT<small>このサイトについて</small></span><span class="m-meta">INFO</span><span class="m-tag">OPEN</span></button>
       </nav>
       <p class="menu-foot">AFTERIMAGE / ARCHIVE SYSTEM — SYNC <span id="menuSync">0%</span></p>
     </div>
   </div>
-  <script src="script.js?v=11"></script>
+  <script src="script.js?v=12"></script>
 </body>
 </html>
