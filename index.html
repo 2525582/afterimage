@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#08090b">
+  <meta name="description" content="A dark character archive.">
+  <title>CHARACTER ARCHIVE — AFTERIMAGE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Mono:wght@400;500&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="site-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Return to entry" data-home>
+        <span class="brand-mark">A<span>/</span></span>
+        <span class="brand-copy">AFTERIMAGE<small>CHARACTER ARCHIVE</small></span>
+      </a>
+      <div class="top-meta"><span class="status-dot"></span> ARCHIVE SYSTEM <span class="meta-divider">/</span> <span id="clock">00:00:00</span></div>
+      <button class="menu-trigger" id="menuTrigger" aria-label="Open navigation"><span></span><span></span></button>
+    </header>
+
+    <main>
+      <section class="screen screen-entry is-active" id="entryScreen" aria-labelledby="entryTitle">
+        <div class="entry-grid"></div>
+        <div class="entry-orbit orbit-one"></div><div class="entry-orbit orbit-two"></div>
+        <div class="entry-side-label">PRIVATE COLLECTION <span>—</span> VOL. 001</div>
+        <div class="entry-content">
+          <p class="eyebrow"><span class="eyebrow-line"></span> AN INDEX OF EXISTENCES</p>
+          <h1 id="entryTitle">CHARACTER<br><em>ARCHIVE</em><span class="title-period">.</span></h1>
+          <p class="entry-description">Every existence leaves an afterimage.<br>Somewhere between memory and fiction.</p>
+          <button class="enter-button" id="enterButton"><span>ENTER THE ARCHIVE</span><b>↗</b></button>
+        </div>
+        <div class="entry-bottom"><span>EST. UNKNOWN</span><span>NO. 000 — ∞</span><span>SCROLL TO EXPLORE</span></div>
+        <div class="entry-index">A—001</div>
+      </section>
+
+      <section class="screen screen-index" id="indexScreen" aria-labelledby="indexTitle" aria-hidden="true">
+        <div class="section-heading">
+          <div><p class="eyebrow"><span class="eyebrow-line"></span> THE COLLECTION / 01</p><h2 id="indexTitle">THE <em>INDEX</em></h2></div>
+          <p class="section-note">SELECT AN EXISTENCE<br><span>記録対象を選択してください</span></p>
+        </div>
+        <div class="index-toolbar"><span id="characterCount">03 RECORDS</span><span class="toolbar-rule"></span><span>ARCHIVE STATUS : <b>OPEN</b></span></div>
+        <div class="character-grid" id="characterGrid"></div>
+        <footer class="screen-footer"><span>AFTERIMAGE ARCHIVE</span><span>END OF INDEX <i>✳</i></span></footer>
+      </section>
+
+      <section class="screen screen-profile" id="profileScreen" aria-hidden="true">
+        <div class="profile-topline"><span id="profileSerial">RECORD / 001</span><span>SUBJECT INFORMATION <i>—</i> CLASSIFIED</span><button id="backButton" class="back-button"><b>←</b> BACK TO INDEX</button></div>
+        <div class="profile-layout">
+          <div class="profile-visual">
+            <div class="visual-frame"></div>
+            <div class="visual-placeholder" id="profilePortrait"><span>PORTRAIT<br>PLACEHOLDER</span><small>IMAGE / 01</small></div>
+            <div class="visual-stamp" id="profileStamp">A—001</div>
+            <div class="visual-caption">FIG. 01 <span>—</span> SUBJECT VISUAL</div>
+          </div>
+          <div class="profile-information">
+            <p class="eyebrow"><span class="eyebrow-line"></span> ARCHIVE SUBJECT</p>
+            <p class="profile-kana" id="profileReading">READING / —</p>
+            <h2 id="profileName">CHARACTER<br><em>NAME</em></h2>
+            <p class="profile-quote" id="profileQuote">“A character quote goes here.”</p>
+            <div class="profile-tags" id="profileTags"></div>
+            <div class="detail-grid" id="detailGrid"></div>
+          </div>
+        </div>
+        <footer class="screen-footer"><span>AFTERIMAGE ARCHIVE</span><span id="profileFooter">RECORD 001 <i>✳</i></span></footer>
+      </section>
+    </main>
+    <div class="transition-wipe" id="transitionWipe" aria-hidden="true"></div>
+    <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
+      <button class="menu-close" id="menuClose">CLOSE ×</button>
+      <nav><button data-nav="entry">00 — TOP</button><button data-nav="index">01 — CHARACTER INDEX</button></nav>
+      <p>AFTERIMAGE / ARCHIVE SYSTEM</p>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
