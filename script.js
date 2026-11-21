@@ -875,7 +875,7 @@ function renderWanted() {
   grid.querySelectorAll(".wanted-card").forEach((card) => card.addEventListener("click", () => {
     card.classList.add("denied");
     document.body.classList.add("eroding");
-    window.setTimeout(() => { card.classList.remove("denied"); document.body.classList.remove("eroding"); }, 900);
+    window.setTimeout(() => { card.classList.remove("denied"); document.body.classList.remove("eroding"); }, 1800);
   }));
 }
 window.setInterval(() => {
