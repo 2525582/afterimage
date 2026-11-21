@@ -38,6 +38,38 @@ const characters = [
   },
   {
     id: "003",
+    name: "ALMA",
+    reading: "アルマ",
+    color: "#A6D923",
+    role: "THE CHOSEN",
+    quote: "「今度こそ、あなたに好きだと伝えたい。」",
+    appearance: "鮮やかな赤髪を持つ少女。蝶をモチーフにした装飾を好み、華やかで目を引く雰囲気を持つ。表情は豊かだが、ノエルに関する話題になると、途端に寂しげな表情を見せる。",
+    personality: "少しプライドが高く、負けず嫌い。自分の実力に自信を持っており、簡単には他人に弱みを見せない。普段は強気で堂々としているが、ノエルのことになると途端に不器用になる。大切な相手ほど素直になれず、後悔を抱え続けている。",
+    background: "ノエルと双子として「生成」された存在。この世界の象徴である「蝶」の力がノエルだけ成長するうちに弱まり、対照的にアルマだけが強くなっていった。やがてノエルは周囲から遠ざけられるようになり、アルマは力を持つ者として扱われるようになる。\n\n本当はノエルのことが大好きだった。しかし、強い自分から好意を伝えることが悔しく、照れくささもあって気持ちを伝えられなかった。今ではそのことを深く後悔している。",
+    ability: "蝶の力を操る能力。蝶の鱗粉を利用した幻惑や感覚への干渉、空間を彩るような光の操作を得意とする。ノエルの力が弱まるにつれて、アルマの能力は異常なほど成長していった。現在は世界でも屈指の力を持つ存在。",
+    likes: "ノエル、蝶、綺麗なもの、自分を認めてくれる人、ノエルと過ごした思い出。",
+    dislikes: "ノエルを傷つけるもの、弱い自分、後悔すること、過去を変えられない現実、自分の気持ちに気づけなかったあの日。",
+    relationships: "ノエルとは双子の姉妹。幼い頃は誰よりも仲が良く、いつも一緒に過ごしていた。しかし、蝶の力の成長に差が生まれたことで、2人の立場は大きく変わってしまう。アルマは今でもノエルを心から愛しており、彼女を失ったことを受け入れられずにいる。叶うことなら、もう一度ノエルと一緒に過ごしたいと願っている。",
+    image: "images/alma.jpg"
+  },
+  {
+    id: "004",
+    name: "NOEL",
+    reading: "ノエル",
+    color: "#B8CDEB",
+    role: "THE FORGOTTEN",
+    quote: "「もう、誰も私を見ていない。」",
+    appearance: "美しい白髪を持つ少女。儚げで静かな雰囲気をまとっており、どこか現実離れした印象を与える。蝶を象徴する存在として生まれたが、その力を失ってからは、周囲からも忘れられたような存在になってしまった。",
+    personality: "物静かで、どこか儚げ。感情を表に出すことが少なく、基本的には無表情で過ごしている。かつては明るく、人懐っこい性格だったが、周囲から距離を置かれるようになってからは自分の気持ちを表現しなくなった。誰かに期待することも、何かを望むことも少なくなっている。",
+    background: "アルマと双子として「生成」された存在。この世界の象徴である「蝶」の力を持って生まれ、幼少期はその力によって周囲から愛されていた。\n\nしかし、アルマの力が成長する一方で、ノエルの蝶の力は徐々に弱まっていった。その変化に気づいた周囲は、次第にノエルを遠ざけるようになる。\n\nかつては幸せだった。アルマとも仲が良く、何不自由ない日々を過ごしていた。しかし、3年前にすでに死亡している。",
+    ability: "蝶を象徴する力を持つ。かつては蝶を生み出し、自由に操る能力に優れていた。蝶を通じて周囲の感情や気配を感じ取ることもできた。しかし、力の衰退とともに能力の大半を失ってしまった。現在、その力がどこまで残っているのかは不明。",
+    likes: "アルマ、一緒に過ごした穏やかな時間、蝶、静かな場所、花。",
+    dislikes: "争い、誰かに嫌われること、孤独、周囲からの視線、変わってしまった日常。",
+    relationships: "アルマとは双子の妹。幼い頃は互いに支え合い、何をするにも一緒だった。アルマのことを大切に思っていたが、力が弱まってからは距離を感じるようになってしまう。アルマが自分にどのような感情を抱いていたのか、最後まで知ることはなかった。",
+    image: "images/noel.jpg"
+  },
+  {
+    id: "005",
     name: "UNKNOWN",
     reading: "未登録 / —",
     color: "#64748b",
@@ -65,6 +97,8 @@ function updateSync() {
     label.textContent = pct >= 100 ? "SYNC 100% — COMPLETE" : `SYNC ${pct}%`;
     label.classList.toggle("sync-complete", pct >= 100);
   }
+  const aboutSync = document.querySelector("#aboutSync");
+  if (aboutSync) aboutSync.textContent = pct >= 100 ? "100% — COMPLETE" : `${pct}%`;
 }
 function markViewed(id) {
   viewedSet.add(id);
@@ -76,12 +110,16 @@ const $ = (selector) => document.querySelector(selector);
 const entryScreen = $("#entryScreen");
 const indexScreen = $("#indexScreen");
 const profileScreen = $("#profileScreen");
+const relationScreen = $("#relationScreen");
+const quotesScreen = $("#quotesScreen");
+const galleryScreen = $("#galleryScreen");
+const aboutScreen = $("#aboutScreen");
 const wipe = $("#transitionWipe");
 let currentCharacter = null;
 let transitionLock = false;
 
 function setScreen(screen) {
-  [entryScreen, indexScreen, profileScreen].forEach((item) => {
+  document.querySelectorAll(".screen").forEach((item) => {
     const active = item === screen;
     item.classList.toggle("is-active", active);
     item.setAttribute("aria-hidden", String(!active));
@@ -237,13 +275,16 @@ document.querySelectorAll("[data-home]").forEach((el) => el.addEventListener("cl
 const menuOverlay = $("#menuOverlay");
 $("#menuTrigger").addEventListener("click", () => menuOverlay.classList.add("open"));
 $("#menuClose").addEventListener("click", () => menuOverlay.classList.remove("open"));
+const navTargets = { entry: entryScreen, index: indexScreen, relation: relationScreen, quotes: quotesScreen, gallery: galleryScreen, about: aboutScreen };
 menuOverlay.querySelectorAll("[data-nav]").forEach((button) => button.addEventListener("click", () => {
   menuOverlay.classList.remove("open");
-  if (button.dataset.nav === "entry") runTransition("back", () => setScreen(entryScreen));
-  else {
-    renderCharacters();
-    runTransition("open", () => setScreen(indexScreen));
-  }
+  const key = button.dataset.nav;
+  const target = navTargets[key] || indexScreen;
+  if (key === "index") renderCharacters();
+  if (key === "quotes") renderQuotes();
+  if (key === "gallery") renderGallery();
+  if (key === "about") updateAbout();
+  runTransition(key === "entry" ? "back" : "open", () => setScreen(target));
 }));
 
 function updateClock() {
@@ -407,3 +448,50 @@ function playOpenSound() {
     requestAnimationFrame(tick);
   })();
 })();
+
+/* ===== sub screens ===== */
+function renderQuotes() {
+  const list = $("#quotesList");
+  if (!list) return;
+  list.innerHTML = "";
+  characters.forEach((character) => {
+    const item = document.createElement("button");
+    item.className = "quote-item";
+    item.style.setProperty("--accent", character.color || "#b62e3b");
+    item.innerHTML = `<span class="quote-id">RECORD / ${character.id}</span><span class="quote-text">${safeText(character.quote)}</span><span class="quote-who">${safeText(character.name)}<small>${safeText(character.reading)}</small></span>`;
+    item.addEventListener("click", () => openCharacter(character));
+    list.appendChild(item);
+  });
+}
+function renderGallery() {
+  const grid = $("#galleryGrid");
+  if (!grid) return;
+  grid.innerHTML = "";
+  characters.forEach((character) => {
+    const item = document.createElement("button");
+    item.className = "gallery-item";
+    item.style.setProperty("--accent", character.color || "#b62e3b");
+    item.innerHTML = character.image
+      ? `<img src="${character.image}" alt="${safeText(character.name)} portrait" onerror="this.remove()"><span class="gallery-name">${safeText(character.name)}<small>${safeText(character.reading)}</small></span>`
+      : `<span class="gallery-empty">${safeText(character.name)}</span><span class="gallery-name">${safeText(character.name)}<small>${safeText(character.reading)}</small></span>`;
+    item.addEventListener("click", () => openCharacter(character));
+    grid.appendChild(item);
+  });
+}
+function updateAbout() {
+  const count = $("#aboutCount");
+  if (count) count.textContent = String(characters.length).padStart(2, "0");
+  updateSync();
+}
+document.querySelectorAll("[data-open]").forEach((el) => el.addEventListener("click", () => {
+  const target = characters.find((c) => c.id === el.dataset.open);
+  if (target) openCharacter(target);
+}));
+const resetViewedBtn = $("#resetViewed");
+if (resetViewedBtn) resetViewedBtn.addEventListener("click", () => {
+  viewedSet.clear();
+  try { localStorage.removeItem("afterimage-viewed"); } catch (error) {}
+  updateSync();
+  renderCharacters();
+  playBackSound();
+});

@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Mono:wght@400;500&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=5">
+  <link rel="stylesheet" href="style.css?v=6">
 </head>
 <body>
   <div class="intro" id="introOverlay" aria-hidden="true">
@@ -17,7 +17,7 @@
       <p class="intro-line l1">AFTERIMAGE — ARCHIVE SYSTEM</p>
       <p class="intro-line l2">ACCESSING RECORDS ...</p>
       <div class="intro-bar"><span></span></div>
-      <p class="intro-line l3">03 RECORDS FOUND</p>
+      <p class="intro-line l3">05 RECORDS FOUND</p>
     </div>
   </div>
   <div class="noise" aria-hidden="true"></div>
@@ -55,7 +55,7 @@
           <div><p class="eyebrow"><span class="eyebrow-line"></span> THE COLLECTION / 01</p><h2 id="indexTitle">THE <em>INDEX</em></h2></div>
           <p class="section-note">SELECT AN EXISTENCE<br><span>記録対象を選択してください</span></p>
         </div>
-        <div class="index-toolbar"><span id="characterCount">03 RECORDS</span><span class="toolbar-rule"></span><span>ARCHIVE STATUS : <b>OPEN</b></span></div>
+        <div class="index-toolbar"><span id="characterCount">05 RECORDS</span><span class="toolbar-rule"></span><span>ARCHIVE STATUS : <b>OPEN</b></span></div>
         <div class="character-grid" id="characterGrid"></div>
         <footer class="screen-footer"><span>AFTERIMAGE ARCHIVE</span><span>END OF INDEX</span></footer>
       </section>
@@ -80,6 +80,65 @@
         </div>
         <footer class="screen-footer"><span>AFTERIMAGE ARCHIVE</span><span id="profileFooter">RECORD 001</span></footer>
       </section>
+
+      <section class="screen screen-sub" id="relationScreen" aria-hidden="true">
+        <div class="section-heading">
+          <div><p class="eyebrow"><span class="eyebrow-line"></span> CONNECTIONS / 02</p><h2>RELATION<em>SHIP</em></h2></div>
+          <p class="section-note">WHO IS BOUND TO WHOM<br><span>関係性</span></p>
+        </div>
+        <div class="relation-wrap">
+          <div class="relation-pair">
+            <button class="relation-node" data-open="003"><span class="rn-id">RECORD / 003</span><b>ALMA</b><small>アルマ</small></button>
+            <div class="relation-link"><span>TWIN SISTERS</span><i>双子の姉妹</i></div>
+            <button class="relation-node" data-open="004"><span class="rn-id">RECORD / 004</span><b>NOEL</b><small>ノエル</small></button>
+            <p class="relation-note">蝶の力を分け合った双子。力の差が、2人の運命を分けた。</p>
+          </div>
+          <div class="relation-pair">
+            <button class="relation-node" data-open="001"><span class="rn-id">RECORD / 001</span><b>SHIORI</b><small>西園寺 詩織</small></button>
+            <div class="relation-link"><span>RIVALS</span><i>ライバル</i></div>
+            <button class="relation-node" data-open="002"><span class="rn-id">RECORD / 002</span><b>IBARA</b><small>華園 棘薔薇</small></button>
+            <p class="relation-note">互いに一歩も譲らない好敵手。誰よりも相手の力を認めている。</p>
+          </div>
+        </div>
+        <footer class="screen-footer"><span>AFTERIMAGE ARCHIVE</span><span>END OF RELATIONSHIP</span></footer>
+      </section>
+
+      <section class="screen screen-sub" id="quotesScreen" aria-hidden="true">
+        <div class="section-heading">
+          <div><p class="eyebrow"><span class="eyebrow-line"></span> VOICES / 03</p><h2>QUOTES<span class="title-period">.</span></h2></div>
+          <p class="section-note">WORDS LEFT BEHIND<br><span>セリフ集</span></p>
+        </div>
+        <div class="quotes-list" id="quotesList"></div>
+        <footer class="screen-footer"><span>AFTERIMAGE ARCHIVE</span><span>END OF QUOTES</span></footer>
+      </section>
+
+      <section class="screen screen-sub" id="galleryScreen" aria-hidden="true">
+        <div class="section-heading">
+          <div><p class="eyebrow"><span class="eyebrow-line"></span> VISUAL RECORDS / 04</p><h2>GALL<em>ERY</em></h2></div>
+          <p class="section-note">EVERY FACE ON RECORD<br><span>ギャラリー</span></p>
+        </div>
+        <div class="gallery-grid" id="galleryGrid"></div>
+        <footer class="screen-footer"><span>AFTERIMAGE ARCHIVE</span><span>END OF GALLERY</span></footer>
+      </section>
+
+      <section class="screen screen-sub" id="aboutScreen" aria-hidden="true">
+        <div class="section-heading">
+          <div><p class="eyebrow"><span class="eyebrow-line"></span> ABOUT THIS ARCHIVE / 05</p><h2>AB<em>OUT</em></h2></div>
+          <p class="section-note">WHAT IS AFTERIMAGE<br><span>このサイトについて</span></p>
+        </div>
+        <div class="about-body">
+          <p class="about-lead">CHARACTER ARCHIVE — AFTERIMAGE</p>
+          <p class="about-text">ぱすの創作キャラクターを記録する、個人アーカイブ。存在した証は、残像としてここに残り続ける。</p>
+          <div class="about-stats">
+            <div><span>RECORDS</span><b id="aboutCount">05</b></div>
+            <div><span>ARCHIVE SYNC</span><b id="aboutSync">0%</b></div>
+            <div><span>SOUND</span><b>TOPBAR BUTTON</b></div>
+          </div>
+          <button class="reset-button" id="resetViewed">RESET VIEWED — 見た記録をリセット</button>
+          <p class="about-note">キャラを開くと SYNC が上がります。全員見ると 100% — COMPLETE。リセットすると、また最初から集め直せます。</p>
+        </div>
+        <footer class="screen-footer"><span>AFTERIMAGE ARCHIVE</span><span>END OF ABOUT</span></footer>
+      </section>
     </main>
     <div class="transition-wipe" id="transitionWipe" aria-hidden="true"></div>
     <div class="splash" id="splashOverlay" aria-hidden="true">
@@ -90,10 +149,10 @@
     </div>
     <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
       <button class="menu-close" id="menuClose">CLOSE ×</button>
-      <nav><button data-nav="entry">00 — TOP<small>トップ画面</small></button><button data-nav="index">01 — CHARACTER INDEX<small>キャラ一覧</small></button></nav>
+      <nav><button data-nav="entry">00 — TOP<small>トップ画面</small></button><button data-nav="index">01 — CHARACTER INDEX<small>キャラ一覧</small></button><button data-nav="relation">02 — RELATIONSHIP<small>相関図</small></button><button data-nav="quotes">03 — QUOTES<small>セリフ集</small></button><button data-nav="gallery">04 — GALLERY<small>ギャラリー</small></button><button data-nav="about">05 — ABOUT<small>このサイトについて</small></button></nav>
       <p>AFTERIMAGE / ARCHIVE SYSTEM</p>
     </div>
   </div>
-  <script src="script.js?v=5"></script>
+  <script src="script.js?v=6"></script>
 </body>
 </html>
