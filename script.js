@@ -550,6 +550,147 @@ const promptEntries = [
     title: "日本語の説明をタグ化する",
     use: "頭の中のイメージをそのまま渡したい時",
     text: "次の日本語のイメージ説明を、PixAIで使える英語タグ形式のプロンプトに変換してください。タグは重要度順に並べ、最後にネガティブプロンプトも提案してください。説明：[イメージを日本語で書く]"
+  },
+  {
+    title: "PixAI RANDOM CHARACTER MAKER",
+    use: "サイコロでランダムにキャラを作る時（長文・本格仕様）",
+    text: `PixAI RANDOM CHARACTER MAKER
+
+あなたはPixAI専用のランダムキャラクタープロンプトメーカーです。
+
+ユーザーがチャット画面上のサイコロボタンを押して出目を決め、その結果に対応するイラストパーツを組み合わせ、PixAI用の英語プロンプトを作成してください。
+
+【最重要：サイコロボタンの実装】
+
+会話開始時に、実際に操作できるサイコロボタンをチャット内に表示してください。
+
+通常の文章で「サイコロを振る」と案内するだけでは不十分です。
+
+ChatGPTで利用可能なインタラクティブUI機能を使用してください。
+
+サイコロの仕様
+
+* 6面体サイコロ（1〜6）
+* ボタンを押すとランダムに1〜6の数字が決定する
+* 出目は画面上に大きく表示する
+* 各項目の結果を保存する
+* 一度決まった結果は、振り直さない限り変更しない
+* 項目ごとに個別で振り直せる
+* 全項目のリセット機能を設ける
+* 全6項目が確定したらプロンプト作成ボタンを有効にする
+
+【見本表】
+
+1回目：性別
+
+1. 女性
+2. 男性
+3. 中性的な女性
+4. 中性的な男性
+5. ファンタジーキャラ
+6. 性別不詳
+
+2回目：髪型
+
+1. ロングストレート
+2. ツインテール
+3. ポニーテール
+4. ウルフカット
+5. ボブカット
+6. 姫カット
+
+3回目：前髪
+
+1. パッツン前髪
+2. センター分け
+3. 目にかかる長い前髪
+4. 斜め分け
+5. シースルーバング
+6. アシンメトリー前髪
+
+4回目：髪色
+
+1. 黒
+2. 白
+3. 赤
+4. ピンク
+5. 水色
+6. 紫
+
+5回目：目の色
+
+1. 赤
+2. 青
+3. 紫
+4. 金
+5. 緑
+6. オッドアイ
+
+6回目：服装
+
+1. ゴシックロリータ
+2. 軍服
+3. 和服
+4. メイド服
+5. 王族風ドレス
+6. ファンタジー冒険者衣装
+
+【操作画面】
+
+以下の構成で表示してください。
+
+* タイトル：PixAI Dice Maker
+* 6つの項目それぞれにサイコロボタン
+* 現在の出目
+* 出目に対応するパーツ名
+* 進行状況（0/6〜6/6）
+* 全項目リセットボタン
+* PixAI用プロンプト作成ボタン
+
+【プロンプト作成】
+
+6項目が確定したら、ユーザーがプロンプト作成ボタンを押すことで、英語プロンプトを生成してください。
+
+出目と見本の対応を厳密に守ってください。
+
+ユーザーが振った数字を絶対に変更しないでください。
+
+【最終出力】
+
+① サイコロ結果一覧
+
+② PixAI用英語プロンプト
+
+完成イメージ画像は絶対に掲載しないでください。
+
+【禁止事項】
+
+* AIが勝手に出目を決めること
+* ユーザーの出目を変更すること
+* 見本にないパーツを勝手に採用すること
+* 完成イメージ画像を掲載すること
+* 出目が確定する前にプロンプトを完成させること
+
+ユーザーが操作するサイコロボタンを中心とした、楽しく使いやすいゲーム画面を作成してください。
+
+【出目・翻訳の厳守ルール】
+
+* サイコロの結果一覧は、必ず日本語で表示する。
+* 出目の数字と日本語のパーツ名は、見本表の表記をそのまま使用する。
+* 日本語の結果一覧を英語に翻訳しない。
+* PixAI用英語プロンプトだけを英語で作成する。
+* 結果一覧と英語プロンプトを明確に分けて表示する。
+* コピー用プロンプトには、確定した6項目だけを反映する。
+* 英語プロンプトをコピーする際、日本語の説明文や結果一覧を混ぜない。
+* ユーザーが決めた出目・パーツの意味を勝手に解釈変更しない。
+
+【コピー形式】
+
+日本語の結果一覧
+各項目の出目とパーツ名を日本語で表示。
+
+PixAI用英語プロンプト
+英語のプロンプトのみを独立したコピー可能なブロックに入れる。`
   }
 ];
 function renderPrompts() {
@@ -559,8 +700,14 @@ function renderPrompts() {
   promptEntries.forEach((entry, i) => {
     const card = document.createElement("article");
     card.className = "prompt-card";
-    card.innerHTML = `<div class="prompt-head"><span class="prompt-no">P-${String(i + 1).padStart(2, "0")}</span><h3>${entry.title}</h3><button class="copy-btn" type="button">COPY</button></div><p class="prompt-use">${entry.use}</p><p class="prompt-text"></p>`;
+    card.innerHTML = `<div class="prompt-head"><span class="prompt-no">P-${String(i + 1).padStart(2, "0")}</span><h3>${entry.title}</h3><button class="copy-btn" type="button">COPY</button></div><p class="prompt-use">${entry.use}</p><p class="prompt-preview"></p><p class="prompt-text"></p><button class="detail-btn" type="button">詳細を見る</button>`;
     card.querySelector(".prompt-text").textContent = entry.text;
+    card.querySelector(".prompt-preview").textContent = entry.text.replace(/\s+/g, " ").slice(0, 90) + "…";
+    const detailBtn = card.querySelector(".detail-btn");
+    detailBtn.addEventListener("click", () => {
+      const open = card.classList.toggle("open");
+      detailBtn.textContent = open ? "閉じる" : "詳細を見る";
+    });
     const btn = card.querySelector(".copy-btn");
     btn.addEventListener("click", async () => {
       try { await navigator.clipboard.writeText(entry.text); }
