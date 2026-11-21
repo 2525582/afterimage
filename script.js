@@ -345,6 +345,7 @@ function finishIntro() {
   if (!introOverlay || introOverlay.dataset.done) return;
   introOverlay.dataset.done = "1";
   document.body.classList.add("intro-done");
+  if (window.startTitleDecode) window.startTitleDecode();
   introOverlay.classList.add("intro-hide");
   window.setTimeout(() => introOverlay.remove(), 650);
 }
@@ -787,3 +788,56 @@ window.setTimeout(() => {
   if (ghost) ghost.classList.add("flash");
   window.setTimeout(() => { if (ghost) ghost.classList.remove("flash"); }, 110);
 }, 1980);
+
+/* ===== entry screen upgrades ===== */
+function decodeTitle(el, delay) {
+  const finalText = el.dataset.text;
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#/=+";
+  window.setTimeout(() => {
+    let frame = 0;
+    const total = 26;
+    const iv = window.setInterval(() => {
+      frame++;
+      const resolved = Math.floor((frame / total) * finalText.length);
+      el.textContent = finalText.split("").map((ch, i) => (i < resolved ? ch : chars[Math.floor(Math.random() * chars.length)])).join("");
+      if (frame >= total) { window.clearInterval(iv); el.textContent = finalText; }
+    }, 34);
+  }, delay);
+}
+let titleDecoded = false;
+function startTitleDecode() {
+  if (titleDecoded) return;
+  titleDecoded = true;
+  document.querySelectorAll("#entryTitle .ttl").forEach((el, i) => decodeTitle(el, i * 220));
+}
+window.setInterval(() => {
+  if (document.hidden) return;
+  if (!entryScreen.classList.contains("is-active")) return;
+  if (Math.random() > 0.22) return;
+  const title = $("#entryTitle");
+  if (!title) return;
+  title.classList.add("title-glitch");
+  window.setTimeout(() => title.classList.remove("title-glitch"), 190);
+}, 7000);
+const sessionStart = Date.now();
+window.setInterval(() => {
+  const hud = $("#hudSession");
+  if (hud) {
+    const s = Math.floor((Date.now() - sessionStart) / 1000);
+    const hh = String(Math.floor(s / 3600)).padStart(2, "0");
+    const mm = String(Math.floor((s % 3600) / 60)).padStart(2, "0");
+    const ss = String(s % 60).padStart(2, "0");
+    hud.textContent = `${hh}:${mm}:${ss}`;
+  }
+  const hudSync = $("#hudSync");
+  const syncLabel = $("#syncLabel");
+  if (hudSync && syncLabel) hudSync.textContent = syncLabel.textContent.replace("SYNC ", "");
+}, 1000);
+entryScreen.addEventListener("pointermove", (event) => {
+  const rect = entryScreen.getBoundingClientRect();
+  entryScreen.style.setProperty("--sx", `${((event.clientX - rect.left) / rect.width) * 100}%`);
+  entryScreen.style.setProperty("--sy", `${((event.clientY - rect.top) / rect.height) * 100}%`);
+});
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Enter" && entryScreen.classList.contains("is-active")) $("#enterButton").click();
+});

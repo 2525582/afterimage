@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Mono:wght@400;500&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=10">
+  <link rel="stylesheet" href="style.css?v=11">
 </head>
 <body>
   <div class="intro" id="introOverlay" aria-hidden="true">
@@ -41,9 +41,14 @@
         <div class="entry-orbit orbit-one"></div><div class="entry-orbit orbit-two"></div>
         <div class="entry-marquee" aria-hidden="true"><div class="marquee-track"><span>AFTERIMAGE / CHARACTER ARCHIVE / PRIVATE COLLECTION — VOL. 001 / EVERY EXISTENCE LEAVES AN AFTERIMAGE /&nbsp;</span><span>AFTERIMAGE / CHARACTER ARCHIVE / PRIVATE COLLECTION — VOL. 001 / EVERY EXISTENCE LEAVES AN AFTERIMAGE /&nbsp;</span></div></div>
         <div class="entry-side-label">PRIVATE COLLECTION <span>—</span> VOL. 001</div>
+        <div class="name-band band-left" aria-hidden="true"><div class="band-track"><span>SAIONJI SHIORI — HANAZONO IBARA — ALMA — NOEL — SAIONJI SHIORI — HANAZONO IBARA — ALMA — NOEL — SAIONJI SHIORI — HANAZONO IBARA — ALMA — NOEL — </span><span>SAIONJI SHIORI — HANAZONO IBARA — ALMA — NOEL — SAIONJI SHIORI — HANAZONO IBARA — ALMA — NOEL — SAIONJI SHIORI — HANAZONO IBARA — ALMA — NOEL — </span></div></div>
+        <div class="name-band band-right" aria-hidden="true"><div class="band-track reverse"><span>NOEL — ALMA — HANAZONO IBARA — SAIONJI SHIORI — NOEL — ALMA — HANAZONO IBARA — SAIONJI SHIORI — NOEL — ALMA — HANAZONO IBARA — SAIONJI SHIORI — </span><span>NOEL — ALMA — HANAZONO IBARA — SAIONJI SHIORI — NOEL — ALMA — HANAZONO IBARA — SAIONJI SHIORI — NOEL — ALMA — HANAZONO IBARA — SAIONJI SHIORI — </span></div></div>
+        <svg class="orbit-ring" viewBox="0 0 200 200" aria-hidden="true"><defs><path id="circlePath" d="M100,100 m-80,0 a80,80 0 1,1 160,0 a80,80 0 1,1 -160,0"/></defs><text><textPath href="#circlePath">AFTERIMAGE — ARCHIVE SYSTEM — EVERY EXISTENCE LEAVES A TRACE — </textPath></text></svg>
+        <div class="entry-hud" aria-hidden="true"><span>MODE / OBSERVE</span><span>SESSION <b id="hudSession">00:00:00</b></span><span>SYNC <b id="hudSync">0%</b></span></div>
+        <div class="entry-spot" id="entrySpot" aria-hidden="true"></div>
         <div class="entry-content">
           <p class="eyebrow"><span class="eyebrow-line"></span> AN INDEX OF EXISTENCES</p>
-          <h1 id="entryTitle">CHARACTER<br><em>ARCHIVE</em><span class="title-period">.</span></h1>
+          <h1 id="entryTitle"><span class="ttl" data-text="CHARACTER">CHARACTER</span><br><em><span class="ttl" data-text="ARCHIVE">ARCHIVE</span></em><span class="title-period">.</span></h1>
           <p class="entry-description">Every existence leaves an afterimage.<br>Somewhere between memory and fiction.</p>
           <button class="enter-button" id="enterButton"><span>ENTER THE ARCHIVE</span><b>↗</b></button>
         </div>
@@ -211,6 +216,6 @@
       <p class="menu-foot">AFTERIMAGE / ARCHIVE SYSTEM — SYNC <span id="menuSync">0%</span></p>
     </div>
   </div>
-  <script src="script.js?v=10"></script>
+  <script src="script.js?v=11"></script>
 </body>
 </html>
