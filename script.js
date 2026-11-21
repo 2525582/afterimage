@@ -108,7 +108,7 @@ function renderProfile(character) {
   document.documentElement.style.setProperty("--red", character.color || "#b62e3b");
   document.documentElement.style.setProperty("--red-bright", character.color || "#ed4655");
   $("#profileSerial").textContent = `RECORD / ${character.id}`;
-  $("#profileFooter").innerHTML = `RECORD ${character.id} <i>✳</i>`;
+  $("#profileFooter").innerHTML = `RECORD ${character.id}`;
   $("#profileReading").textContent = safeText(character.reading, "READING / —");
   $("#profileName").innerHTML = `${safeText(character.name).replaceAll(" ", "<br>")}`;
   $("#profileQuote").textContent = safeText(character.quote);
