@@ -215,6 +215,7 @@ function openCharacter(character) {
 }
 
 function returnToIndex() {
+  renderCharacters();
   runTransition("back", () => {
     document.documentElement.style.setProperty("--red", "#b62e3b");
     document.documentElement.style.setProperty("--red-bright", "#ed4655");
