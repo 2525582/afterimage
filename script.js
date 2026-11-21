@@ -203,3 +203,7 @@ function updateClock() {
 updateClock();
 window.setInterval(updateClock, 1000);
 renderCharacters();
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") menuOverlay.classList.remove("open");
+});
