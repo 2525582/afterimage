@@ -54,6 +54,24 @@ const characters = [
   }
 ];
 
+const viewedSet = new Set((() => {
+  try { return JSON.parse(localStorage.getItem("afterimage-viewed") || "[]"); }
+  catch (error) { return []; }
+})());
+function updateSync() {
+  const pct = characters.length ? Math.round((viewedSet.size / characters.length) * 100) : 0;
+  const label = document.querySelector("#syncLabel");
+  if (label) {
+    label.textContent = pct >= 100 ? "SYNC 100% — COMPLETE" : `SYNC ${pct}%`;
+    label.classList.toggle("sync-complete", pct >= 100);
+  }
+}
+function markViewed(id) {
+  viewedSet.add(id);
+  try { localStorage.setItem("afterimage-viewed", JSON.stringify([...viewedSet])); } catch (error) {}
+  updateSync();
+}
+
 const $ = (selector) => document.querySelector(selector);
 const entryScreen = $("#entryScreen");
 const indexScreen = $("#indexScreen");
@@ -92,7 +110,8 @@ function renderCharacters() {
     card.innerHTML = `
       <div class="card-art">${art}</div>
       <div class="card-glare"></div>
-      <div class="card-topline"><span>RECORD / ${character.id}</span><span>● ACTIVE</span></div>
+      <div class="card-topline"><span>RECORD / ${character.id}</span><span>${viewedSet.has(character.id) ? "● VIEWED" : "● ACTIVE"}</span></div>
+      ${viewedSet.has(character.id) ? '<span class="viewed-stamp">VIEWED</span>' : ""}
       <div class="card-info">
         <div class="card-role">${safeText(character.role, "ARCHIVE SUBJECT")}</div>
         <h3 class="card-name">${safeText(character.name)}</h3>
@@ -172,9 +191,27 @@ function runTransition(kind, callback) {
   }, 360);
 }
 
+let splashBusy = false;
 function openCharacter(character) {
+  if (splashBusy) return;
+  splashBusy = true;
   renderProfile(character);
-  runTransition("open", () => setScreen(profileScreen));
+  markViewed(character.id);
+  playOpenSound();
+  const nameEl = $("#splashName");
+  nameEl.textContent = character.name;
+  nameEl.dataset.text = character.name;
+  $("#splashMeta").textContent = `RECORD / ${character.id} — OPENING`;
+  $("#splashReading").textContent = character.reading;
+  const splash = $("#splashOverlay");
+  splash.classList.add("show");
+  document.body.classList.add("glitching");
+  window.setTimeout(() => {
+    splash.classList.remove("show");
+    document.body.classList.remove("glitching");
+    runTransition("open", () => setScreen(profileScreen));
+    splashBusy = false;
+  }, 1050);
 }
 
 function returnToIndex() {
@@ -186,10 +223,11 @@ function returnToIndex() {
 }
 
 $("#enterButton").addEventListener("click", () => {
+  playBlip();
   renderCharacters();
   runTransition("open", () => setScreen(indexScreen));
 });
-$("#backButton").addEventListener("click", returnToIndex);
+$("#backButton").addEventListener("click", () => { playBackSound(); returnToIndex(); });
 document.querySelectorAll("[data-home]").forEach((el) => el.addEventListener("click", (event) => {
   event.preventDefault();
   runTransition("back", () => setScreen(entryScreen));
@@ -215,6 +253,7 @@ function updateClock() {
 updateClock();
 window.setInterval(updateClock, 1000);
 renderCharacters();
+updateSync();
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") menuOverlay.classList.remove("open");
@@ -272,3 +311,98 @@ window.addEventListener("scroll", () => {
   const img = profileScreen.querySelector(".visual-placeholder img");
   if (img) img.style.transform = `translateY(${Math.min(window.scrollY * 0.05, 28).toFixed(1)}px) scale(1.06)`;
 }, { passive: true });
+
+/* ===== sound (WebAudio, no files) ===== */
+let audioCtx = null;
+let soundOn = false;
+try { soundOn = localStorage.getItem("afterimage-sound") === "on"; } catch (error) {}
+const soundToggle = $("#soundToggle");
+function refreshSoundLabel() { if (soundToggle) soundToggle.textContent = soundOn ? "SOUND ON" : "SOUND OFF"; }
+refreshSoundLabel();
+if (soundToggle) soundToggle.addEventListener("click", () => {
+  soundOn = !soundOn;
+  try { localStorage.setItem("afterimage-sound", soundOn ? "on" : "off"); } catch (error) {}
+  refreshSoundLabel();
+  if (soundOn) playBlip();
+});
+function ensureAudio() {
+  if (!audioCtx) { const AC = window.AudioContext || window.webkitAudioContext; if (AC) audioCtx = new AC(); }
+  if (audioCtx && audioCtx.state === "suspended") audioCtx.resume();
+  return audioCtx;
+}
+function tone(freqFrom, freqTo, dur, type, gainVal, delay = 0) {
+  const ctx = ensureAudio(); if (!ctx) return;
+  const t0 = ctx.currentTime + delay;
+  const osc = ctx.createOscillator(); const gain = ctx.createGain();
+  osc.type = type;
+  osc.frequency.setValueAtTime(freqFrom, t0);
+  osc.frequency.exponentialRampToValueAtTime(Math.max(freqTo, 1), t0 + dur);
+  gain.gain.setValueAtTime(gainVal, t0);
+  gain.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+  osc.connect(gain).connect(ctx.destination);
+  osc.start(t0); osc.stop(t0 + dur + 0.05);
+}
+function noiseBurst(dur, gainVal, delay = 0) {
+  const ctx = ensureAudio(); if (!ctx) return;
+  const t0 = ctx.currentTime + delay;
+  const len = Math.floor(ctx.sampleRate * dur);
+  const buffer = ctx.createBuffer(1, len, ctx.sampleRate);
+  const data = buffer.getChannelData(0);
+  for (let i = 0; i < len; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / len);
+  const src = ctx.createBufferSource(); src.buffer = buffer;
+  const gain = ctx.createGain(); gain.gain.value = gainVal;
+  const filter = ctx.createBiquadFilter(); filter.type = "highpass"; filter.frequency.value = 900;
+  src.connect(filter).connect(gain).connect(ctx.destination);
+  src.start(t0);
+}
+function playBlip() { if (!soundOn) return; tone(740, 520, 0.07, "square", 0.05); }
+function playBackSound() { if (!soundOn) return; tone(420, 180, 0.12, "square", 0.05); }
+function playOpenSound() {
+  if (!soundOn) return;
+  tone(96, 36, 0.9, "sawtooth", 0.11);
+  tone(58, 30, 1.0, "triangle", 0.1, 0.05);
+  noiseBurst(0.12, 0.06, 0.02);
+  noiseBurst(0.08, 0.05, 0.34);
+  noiseBurst(0.16, 0.04, 0.62);
+}
+
+/* ===== drifting dust ===== */
+(() => {
+  const canvas = $("#dustCanvas");
+  if (!canvas) return;
+  const ctx = canvas.getContext("2d");
+  let w = 0, h = 0, dots = [];
+  function resize() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = window.innerWidth; h = window.innerHeight;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    canvas.style.width = `${w}px`; canvas.style.height = `${h}px`;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const count = Math.min(70, Math.floor((w * h) / 26000));
+    dots = Array.from({ length: count }, () => ({
+      x: Math.random() * w, y: Math.random() * h,
+      r: Math.random() * 1.6 + 0.4,
+      s: Math.random() * 0.22 + 0.05,
+      drift: (Math.random() - 0.5) * 0.12,
+      p: Math.random() * Math.PI * 2,
+      red: Math.random() < 0.22
+    }));
+  }
+  resize();
+  window.addEventListener("resize", resize);
+  (function tick() {
+    ctx.clearRect(0, 0, w, h);
+    const t = performance.now() / 1000;
+    dots.forEach((d) => {
+      d.y -= d.s; d.x += d.drift + Math.sin(t * 0.6 + d.p) * 0.05;
+      if (d.y < -4) { d.y = h + 4; d.x = Math.random() * w; }
+      if (d.x < -4) d.x = w + 4; if (d.x > w + 4) d.x = -4;
+      const a = 0.14 + 0.12 * (0.5 + 0.5 * Math.sin(t * 0.9 + d.p));
+      ctx.beginPath();
+      ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+      ctx.fillStyle = d.red ? `rgba(237,70,85,${a})` : `rgba(220,226,235,${a})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(tick);
+  })();
+})();

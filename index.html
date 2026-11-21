@@ -21,13 +21,16 @@
     </div>
   </div>
   <div class="noise" aria-hidden="true"></div>
+  <canvas id="dustCanvas" aria-hidden="true"></canvas>
+  <div class="scanlines" aria-hidden="true"></div>
   <div class="site-shell">
     <header class="topbar">
       <a class="brand" href="#" aria-label="Return to entry" data-home>
         <span class="brand-mark">A<span>/</span></span>
         <span class="brand-copy">AFTERIMAGE<small>CHARACTER ARCHIVE</small></span>
       </a>
-      <div class="top-meta"><span class="status-dot"></span> ARCHIVE SYSTEM <span class="meta-divider">/</span> <span id="clock">00:00:00</span></div>
+      <div class="top-meta"><span class="status-dot"></span> ARCHIVE SYSTEM <span class="meta-divider">/</span> <span id="clock">00:00:00</span> <span class="meta-divider">/</span> <span id="syncLabel">SYNC 0%</span></div>
+      <button class="sound-toggle" id="soundToggle" aria-label="Toggle sound">SOUND OFF</button>
       <button class="menu-trigger" id="menuTrigger" aria-label="Open navigation"><span></span><span></span></button>
     </header>
 
@@ -79,6 +82,12 @@
       </section>
     </main>
     <div class="transition-wipe" id="transitionWipe" aria-hidden="true"></div>
+    <div class="splash" id="splashOverlay" aria-hidden="true">
+      <p class="splash-meta" id="splashMeta">RECORD / 001 — OPENING</p>
+      <h2 class="splash-name" id="splashName" data-text="SHIORI">SHIORI</h2>
+      <p class="splash-reading" id="splashReading"></p>
+      <p class="splash-warn">SIGNAL UNSTABLE — DO NOT LOOK AWAY</p>
+    </div>
     <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
       <button class="menu-close" id="menuClose">CLOSE ×</button>
       <nav><button data-nav="entry">00 — TOP<small>トップ画面</small></button><button data-nav="index">01 — CHARACTER INDEX<small>キャラ一覧</small></button></nav>
