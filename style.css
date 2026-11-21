@@ -182,3 +182,36 @@ body.glitching .site-shell{animation:bodyGlitch .45s steps(2) both}
 .reset-button:hover{border-color:var(--red-bright);color:var(--red-bright)}
 .about-note{font-size:10px;color:#78808b;line-height:1.9;margin:22px 0 0}
 @media(max-width:640px){.relation-pair{grid-template-columns:1fr;gap:12px}.relation-link{min-width:0}.gallery-grid{grid-template-columns:1fr 1fr}.gallery-item{min-height:230px}}
+
+/* ===== menu redesign + world v6 ===== */
+.menu-overlay{justify-content:flex-start;padding:104px 8vw 36px;overflow-y:auto}
+.menu-head{font:9px var(--mono);letter-spacing:.32em;color:#78808b;margin:0 0 8px}
+.menu-overlay nav{gap:0;width:100%}
+.menu-overlay nav button{display:grid;grid-template-columns:58px 1fr auto auto;align-items:center;gap:16px;width:100%;padding:15px 10px;border-bottom:1px solid var(--line);color:var(--text);text-align:left;cursor:pointer;transition:background .25s,padding-left .25s}
+.menu-overlay nav button:first-child{border-top:1px solid var(--line)}
+.menu-overlay nav button:hover{background:rgba(255,255,255,.035);padding-left:20px;color:var(--text)}
+.menu-overlay nav button .m-num{font:700 12px var(--mono);color:#78808b;letter-spacing:.08em}
+.menu-overlay nav button .m-main{font:700 clamp(23px,4.4vw,38px)/1 var(--display);text-transform:uppercase;letter-spacing:.01em}
+.menu-overlay nav button .m-main small{display:block;font-family:var(--jp);font-size:10px;font-weight:400;color:#8a919c;letter-spacing:.16em;margin-top:6px}
+.menu-overlay nav button .m-meta{font:8px var(--mono);letter-spacing:.18em;color:#9aa1ab;border:1px solid rgba(255,255,255,.18);padding:6px 9px;white-space:nowrap}
+.menu-overlay nav button .m-tag{display:none;font:700 8px var(--mono);letter-spacing:.2em;background:var(--red);color:#fff;padding:6px 9px}
+.menu-overlay nav button.current .m-num{color:var(--red-bright)}
+.menu-overlay nav button.current .m-tag{display:block}
+.menu-overlay nav button.current{background:rgba(182,46,59,.07)}
+.menu-foot{font:8px var(--mono);letter-spacing:.22em;color:#777;margin-top:34px}
+.menu-foot span{color:var(--red-bright)}
+.world-body{max-width:760px}
+.world-lead{font-size:clamp(21px,3.6vw,32px);line-height:1.7;font-weight:600;margin:0 0 10px}
+.world-sec{border-top:1px solid var(--line);padding:28px 0 6px;margin-top:28px}
+.world-sec h3{font:9px var(--mono);letter-spacing:.26em;color:var(--red-bright);margin:0 0 16px}
+.world-sec p{font-size:12px;line-height:2.1;color:#aab1bb;margin:0}
+.timeline{display:grid}
+.tl-item{display:grid;grid-template-columns:96px 1fr;gap:18px;padding:15px 0;border-bottom:1px dashed rgba(255,255,255,.14)}
+.tl-item:last-child{border-bottom:0}
+.tl-when{font:700 10px var(--mono);letter-spacing:.14em;color:var(--red-bright);padding-top:5px}
+.tl-item p{font-size:12px;line-height:2;color:#aab1bb;margin:0}
+.terms{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.term{border:1px solid var(--line);padding:17px}
+.term b{display:block;font-size:13px;margin-bottom:9px}
+.term p{font-size:10px;line-height:1.9;color:#9aa1ab;margin:0}
+@media(max-width:640px){.menu-overlay{padding:92px 6vw 30px}.menu-overlay nav button{grid-template-columns:40px 1fr auto;gap:11px}.menu-overlay nav button .m-tag{display:none}.menu-overlay nav button.current .m-tag{display:none}.menu-overlay nav button.current .m-meta{background:var(--red);border-color:var(--red);color:#fff}.tl-item{grid-template-columns:70px 1fr;gap:12px}}

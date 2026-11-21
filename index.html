@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Mono:wght@400;500&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=6">
+  <link rel="stylesheet" href="style.css?v=7">
 </head>
 <body>
   <div class="intro" id="introOverlay" aria-hidden="true">
@@ -121,9 +121,46 @@
         <footer class="screen-footer"><span>AFTERIMAGE ARCHIVE</span><span>END OF GALLERY</span></footer>
       </section>
 
+      <section class="screen screen-sub" id="worldScreen" aria-hidden="true">
+        <div class="section-heading">
+          <div><p class="eyebrow"><span class="eyebrow-line"></span> THE WORLD / 05</p><h2>WO<em>RLD</em></h2></div>
+          <p class="section-note">STORY OF THE BUTTERFLY<br><span>世界観</span></p>
+        </div>
+        <div class="world-body">
+          <p class="world-lead">蝶が象徴する世界。<br>力は、分け合うものだったはずなのに。</p>
+          <div class="world-sec">
+            <h3>THE BUTTERFLY / 蝶</h3>
+            <p>この世界では「蝶」が象徴とされる。蝶の力は人を魅せ、感情や気配を伝え、時に空間さえ彩る。その力を生まれながらに持つ存在がいる。</p>
+          </div>
+          <div class="world-sec">
+            <h3>GENERATED / 生成</h3>
+            <p>アルマとノエルは、双子として「生成」された存在。幼い頃、2人は誰よりも仲が良く、いつも一緒に過ごしていた。</p>
+          </div>
+          <div class="world-sec">
+            <h3>TIMELINE / 移り変わり</h3>
+            <div class="timeline">
+              <div class="tl-item"><span class="tl-when">幼少期</span><p>ノエルは蝶の力によって周囲から愛され、アルマと穏やかな日々を過ごしていた。</p></div>
+              <div class="tl-item"><span class="tl-when">変化</span><p>アルマの力だけが異常なほど成長し、ノエルの力は弱まっていく。周囲は次第にノエルを遠ざけるようになる。</p></div>
+              <div class="tl-item"><span class="tl-when">3年前</span><p>ノエルが死亡。アルマは、伝えられなかった気持ちを今も深く後悔している。</p></div>
+              <div class="tl-item"><span class="tl-when">現在</span><p>アルマは世界でも屈指の力を持つ存在になった。ノエルの記録は、このアーカイブに残されている。</p></div>
+            </div>
+          </div>
+          <div class="world-sec">
+            <h3>TERMS / 用語</h3>
+            <div class="terms">
+              <div class="term"><b>蝶の力</b><p>蝶を生み出し操る力。感情や気配を感じ取ることもできる。</p></div>
+              <div class="term"><b>鱗粉</b><p>蝶の鱗粉を使った幻惑や、感覚への干渉。アルマの得意技。</p></div>
+              <div class="term"><b>生成</b><p>アルマとノエルが生まれた方法。双子として作られた。</p></div>
+              <div class="term"><b>残像</b><p>存在した証として残るもの。このアーカイブの名前の由来。</p></div>
+            </div>
+          </div>
+        </div>
+        <footer class="screen-footer"><span>AFTERIMAGE ARCHIVE</span><span>END OF WORLD</span></footer>
+      </section>
+
       <section class="screen screen-sub" id="aboutScreen" aria-hidden="true">
         <div class="section-heading">
-          <div><p class="eyebrow"><span class="eyebrow-line"></span> ABOUT THIS ARCHIVE / 05</p><h2>AB<em>OUT</em></h2></div>
+          <div><p class="eyebrow"><span class="eyebrow-line"></span> ABOUT THIS ARCHIVE / 06</p><h2>AB<em>OUT</em></h2></div>
           <p class="section-note">WHAT IS AFTERIMAGE<br><span>このサイトについて</span></p>
         </div>
         <div class="about-body">
@@ -149,10 +186,19 @@
     </div>
     <div class="menu-overlay" id="menuOverlay" aria-hidden="true">
       <button class="menu-close" id="menuClose">CLOSE ×</button>
-      <nav><button data-nav="entry">00 — TOP<small>トップ画面</small></button><button data-nav="index">01 — CHARACTER INDEX<small>キャラ一覧</small></button><button data-nav="relation">02 — RELATIONSHIP<small>相関図</small></button><button data-nav="quotes">03 — QUOTES<small>セリフ集</small></button><button data-nav="gallery">04 — GALLERY<small>ギャラリー</small></button><button data-nav="about">05 — ABOUT<small>このサイトについて</small></button></nav>
-      <p>AFTERIMAGE / ARCHIVE SYSTEM</p>
+      <p class="menu-head">ARCHIVE SYSTEM — SELECT A FILE</p>
+      <nav>
+        <button data-nav="entry"><span class="m-num">00</span><span class="m-main">TOP<small>トップ画面</small></span><span class="m-meta">START</span><span class="m-tag">OPEN</span></button>
+        <button data-nav="index"><span class="m-num">01</span><span class="m-main">CHARACTER INDEX<small>キャラ一覧</small></span><span class="m-meta">05 RECORDS</span><span class="m-tag">OPEN</span></button>
+        <button data-nav="relation"><span class="m-num">02</span><span class="m-main">RELATIONSHIP<small>相関図</small></span><span class="m-meta">02 PAIRS</span><span class="m-tag">OPEN</span></button>
+        <button data-nav="quotes"><span class="m-num">03</span><span class="m-main">QUOTES<small>セリフ集</small></span><span class="m-meta">05 VOICES</span><span class="m-tag">OPEN</span></button>
+        <button data-nav="gallery"><span class="m-num">04</span><span class="m-main">GALLERY<small>ギャラリー</small></span><span class="m-meta">05 FRAMES</span><span class="m-tag">OPEN</span></button>
+        <button data-nav="world"><span class="m-num">05</span><span class="m-main">WORLD<small>世界観</small></span><span class="m-meta">READ</span><span class="m-tag">OPEN</span></button>
+        <button data-nav="about"><span class="m-num">06</span><span class="m-main">ABOUT<small>このサイトについて</small></span><span class="m-meta">INFO</span><span class="m-tag">OPEN</span></button>
+      </nav>
+      <p class="menu-foot">AFTERIMAGE / ARCHIVE SYSTEM — SYNC <span id="menuSync">0%</span></p>
     </div>
   </div>
-  <script src="script.js?v=6"></script>
+  <script src="script.js?v=7"></script>
 </body>
 </html>

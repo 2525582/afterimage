@@ -99,6 +99,8 @@ function updateSync() {
   }
   const aboutSync = document.querySelector("#aboutSync");
   if (aboutSync) aboutSync.textContent = pct >= 100 ? "100% — COMPLETE" : `${pct}%`;
+  const menuSync = document.querySelector("#menuSync");
+  if (menuSync) menuSync.textContent = pct >= 100 ? "100% — COMPLETE" : `${pct}%`;
 }
 function markViewed(id) {
   viewedSet.add(id);
@@ -114,16 +116,20 @@ const relationScreen = $("#relationScreen");
 const quotesScreen = $("#quotesScreen");
 const galleryScreen = $("#galleryScreen");
 const aboutScreen = $("#aboutScreen");
+const worldScreen = $("#worldScreen");
 const wipe = $("#transitionWipe");
 let currentCharacter = null;
 let transitionLock = false;
 
+const screenKeys = new Map();
 function setScreen(screen) {
   document.querySelectorAll(".screen").forEach((item) => {
     const active = item === screen;
     item.classList.toggle("is-active", active);
     item.setAttribute("aria-hidden", String(!active));
   });
+  const key = screenKeys.get(screen);
+  if (key) document.querySelectorAll("[data-nav]").forEach((btn) => btn.classList.toggle("current", btn.dataset.nav === key));
   window.scrollTo({ top: 0, behavior: "instant" });
 }
 
@@ -275,7 +281,15 @@ document.querySelectorAll("[data-home]").forEach((el) => el.addEventListener("cl
 const menuOverlay = $("#menuOverlay");
 $("#menuTrigger").addEventListener("click", () => menuOverlay.classList.add("open"));
 $("#menuClose").addEventListener("click", () => menuOverlay.classList.remove("open"));
-const navTargets = { entry: entryScreen, index: indexScreen, relation: relationScreen, quotes: quotesScreen, gallery: galleryScreen, about: aboutScreen };
+const navTargets = { entry: entryScreen, index: indexScreen, relation: relationScreen, quotes: quotesScreen, gallery: galleryScreen, world: worldScreen, about: aboutScreen };
+screenKeys.set(entryScreen, "entry");
+screenKeys.set(indexScreen, "index");
+screenKeys.set(profileScreen, "index");
+screenKeys.set(relationScreen, "relation");
+screenKeys.set(quotesScreen, "quotes");
+screenKeys.set(galleryScreen, "gallery");
+screenKeys.set(worldScreen, "world");
+screenKeys.set(aboutScreen, "about");
 menuOverlay.querySelectorAll("[data-nav]").forEach((button) => button.addEventListener("click", () => {
   menuOverlay.classList.remove("open");
   const key = button.dataset.nav;
@@ -296,6 +310,7 @@ updateClock();
 window.setInterval(updateClock, 1000);
 renderCharacters();
 updateSync();
+document.querySelectorAll("[data-nav]").forEach((btn) => btn.classList.toggle("current", btn.dataset.nav === "entry"));
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") menuOverlay.classList.remove("open");
