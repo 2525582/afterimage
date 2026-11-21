@@ -236,3 +236,21 @@ body.glitching .site-shell{animation:bodyGlitch .45s steps(2) both}
 .prompt-card.open .prompt-preview{display:none}
 .detail-btn{background:none;border:1px solid rgba(255,255,255,.25);color:#d5d9df;font:8px var(--mono);letter-spacing:.18em;padding:9px 14px;cursor:pointer;transition:border-color .25s,color .25s}
 .detail-btn:hover{border-color:var(--red-bright);color:var(--red-bright)}
+
+/* ===== ominous pack v9 ===== */
+.intro-ghost{position:absolute;left:0;right:0;bottom:13vh;text-align:center;font:700 clamp(14px,2.8vw,23px) var(--mono);letter-spacing:.5em;color:#aebdd2;opacity:0;margin:0;pointer-events:none}
+.intro-ghost.flash{opacity:.92}
+.splash.lost{background:#04050a;animation:splashFlickerLost 1.5s steps(1) both}
+@keyframes splashFlickerLost{0%{opacity:0}10%{opacity:1}30%{opacity:.15}38%{opacity:.85}55%{opacity:.05}63%{opacity:.7}80%{opacity:.25}100%{opacity:1}}
+.splash.lost .splash-name{color:#ccd8ea}
+.splash.lost .splash-name:before{color:#5f7fb8}
+.splash.lost .splash-name:after{color:#e8eef7}
+.splash.lost .splash-warn{color:#93a7c4}
+.splash.lost .splash-meta{color:#5f7089}
+.splash.closing .splash-name{animation:nameDecay .9s steps(7) both}
+.splash.closing .splash-name:before,.splash.closing .splash-name:after{animation:none;opacity:.35}
+@keyframes nameDecay{0%{opacity:1;filter:none;letter-spacing:-.02em}40%{opacity:.75;filter:blur(1px)}70%{opacity:.35;filter:blur(3px);letter-spacing:.14em;transform:translateY(4px)}100%{opacity:0;filter:blur(6px);letter-spacing:.3em;transform:translateY(10px)}}
+body.eroding .site-shell{animation:erodeGlitch .2s steps(2) both}
+@keyframes erodeGlitch{0%{transform:translate(0)}30%{transform:translate(-4px,1px);filter:hue-rotate(50deg)}60%{transform:translate(3px,-1px);filter:invert(.06)}100%{transform:none;filter:none}}
+#profilePortrait.haunted{animation:portraitHaunt .17s steps(2) both}
+@keyframes portraitHaunt{0%{transform:none;filter:none}35%{transform:translate(-5px,2px);filter:brightness(1.5) hue-rotate(40deg)}70%{transform:translate(4px,-1px);filter:brightness(.6)}100%{transform:none;filter:none}}

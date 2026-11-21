@@ -248,24 +248,44 @@ function openCharacter(character) {
   nameEl.dataset.text = character.name;
   $("#splashMeta").textContent = `RECORD / ${character.id} — OPENING`;
   $("#splashReading").textContent = character.reading;
+  const lost = character.id === "004";
+  $("#splashWarn").textContent = lost ? "SIGNAL LOST — NO RESPONSE" : "SIGNAL UNSTABLE — DO NOT LOOK AWAY";
   const splash = $("#splashOverlay");
+  splash.classList.remove("closing");
+  splash.classList.toggle("lost", lost);
   splash.classList.add("show");
   document.body.classList.add("glitching");
   window.setTimeout(() => {
-    splash.classList.remove("show");
+    splash.classList.remove("show", "lost");
     document.body.classList.remove("glitching");
     runTransition("open", () => setScreen(profileScreen));
     splashBusy = false;
-  }, 1050);
+  }, lost ? 1500 : 1050);
 }
 
 function returnToIndex() {
   renderCharacters();
-  runTransition("back", () => {
+  const finish = () => runTransition("back", () => {
     document.documentElement.style.setProperty("--red", "#b62e3b");
     document.documentElement.style.setProperty("--red-bright", "#ed4655");
     setScreen(indexScreen);
   });
+  if (!currentCharacter || splashBusy) { finish(); return; }
+  splashBusy = true;
+  const nameEl = $("#splashName");
+  nameEl.textContent = currentCharacter.name;
+  nameEl.dataset.text = currentCharacter.name;
+  $("#splashMeta").textContent = `RECORD / ${currentCharacter.id} — CLOSING`;
+  $("#splashReading").textContent = currentCharacter.reading;
+  $("#splashWarn").textContent = "RECORD CLOSED";
+  const splash = $("#splashOverlay");
+  splash.classList.remove("lost");
+  splash.classList.add("closing", "show");
+  window.setTimeout(() => {
+    splash.classList.remove("show", "closing");
+    splashBusy = false;
+    finish();
+  }, 900);
 }
 
 $("#enterButton").addEventListener("click", () => {
@@ -726,3 +746,44 @@ function renderPrompts() {
     list.appendChild(card);
   });
 }
+
+/* ===== erosion & hauntings ===== */
+const scrambleChars = "ABCDEF0123456789#/=+";
+function scrambleOnce(el) {
+  if (!el || el.dataset.scrambling) return;
+  const original = el.textContent;
+  el.dataset.scrambling = "1";
+  let step = 0;
+  const iv = window.setInterval(() => {
+    step++;
+    el.textContent = original.split("").map((ch) => (ch === " " ? " " : scrambleChars[Math.floor(Math.random() * scrambleChars.length)])).join("");
+    if (step >= 5) {
+      window.clearInterval(iv);
+      delete el.dataset.scrambling;
+      if (el.id === "syncLabel") updateSync();
+      else el.textContent = original;
+    }
+  }, 55);
+}
+window.setInterval(() => {
+  if (document.hidden) return;
+  if (Math.random() > 0.16) return;
+  document.body.classList.add("eroding");
+  window.setTimeout(() => document.body.classList.remove("eroding"), 200);
+  scrambleOnce(Math.random() < 0.5 ? $("#clock") : $("#syncLabel"));
+}, 6000);
+window.setInterval(() => {
+  if (document.hidden) return;
+  if (!currentCharacter || currentCharacter.id !== "004") return;
+  if (!profileScreen.classList.contains("is-active")) return;
+  if (Math.random() > 0.4) return;
+  const portrait = $("#profilePortrait");
+  if (!portrait) return;
+  portrait.classList.add("haunted");
+  window.setTimeout(() => portrait.classList.remove("haunted"), 170);
+}, 4200);
+window.setTimeout(() => {
+  const ghost = $("#introGhost");
+  if (ghost) ghost.classList.add("flash");
+  window.setTimeout(() => { if (ghost) ghost.classList.remove("flash"); }, 110);
+}, 1980);
