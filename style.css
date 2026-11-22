@@ -316,3 +316,50 @@ body.intro-done .enter-button{animation:riseIn .8s cubic-bezier(.19,1,.22,1) bot
 #completeGhost p{color:#ffb3b9}
 #completeGhost p span{color:#ff8089}
 .haunt-overlay.idle{transition:opacity 3.5s ease,visibility 3.5s}
+
+/* ===== entry & intro upgrades v13 ===== */
+.entry-bg{position:absolute;inset:0;overflow:hidden;z-index:0}
+.entry-bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 22%;opacity:0;filter:grayscale(.85) brightness(.32) contrast(1.06);animation:bgCycle 26s linear infinite}
+.entry-bg img:nth-child(2){animation-delay:6.5s}
+.entry-bg img:nth-child(3){animation-delay:13s}
+.entry-bg img:nth-child(4){animation-delay:19.5s}
+@keyframes bgCycle{0%{opacity:0}5%{opacity:.55}25%{opacity:.55}30.5%{opacity:0}100%{opacity:0}}
+.entry-content{transform:translate(calc(var(--px,0)*6px),calc(var(--py,0)*6px))}
+.entry-grid{background-position:calc(var(--px,0)*18px) calc(var(--py,0)*18px)}
+.orbit-one{transform:rotate(-32deg) translate(calc(var(--px,0)*-16px),calc(var(--py,0)*-16px))}
+.orbit-two{transform:rotate(-32deg) translate(calc(var(--px,0)*-9px),calc(var(--py,0)*-9px))}
+.screen-entry.leaving #entryTitle{animation:titleCollapse .55s ease both}
+@keyframes titleCollapse{35%{letter-spacing:.05em;filter:blur(1px);opacity:.85}100%{letter-spacing:.28em;filter:blur(7px);opacity:0;transform:translateY(8px) scale(.98)}}
+.screen-entry.leaving .entry-description,.screen-entry.leaving .enter-button{animation:fadeDown .4s ease both}
+@keyframes fadeDown{to{opacity:0;transform:translateY(10px)}}
+.intro-log{margin:2px 0 8px;text-align:left}
+.intro-log p{font:9.5px var(--mono);letter-spacing:.18em;color:#7d8593;margin:0 0 7px;opacity:0;animation:lineIn .35s ease forwards}
+.intro-log p:nth-child(1){animation-delay:.5s}
+.intro-log p:nth-child(2){animation-delay:.75s}
+.intro-log p:nth-child(3){animation-delay:1s;color:#c46a72}
+.intro-log p:nth-child(4){animation-delay:1.25s}
+.intro-pct{font:700 13px var(--mono);letter-spacing:.3em;color:#e7e9ed;margin:0 0 12px;opacity:0;animation:lineIn .4s ease .5s forwards}
+.intro-line.l3{animation-delay:1.45s}
+.intro-line.l4{animation-delay:1.7s;color:#ff8089;font-size:9px}
+.intro-inner{text-align:center}
+.intro-log{display:inline-block;text-align:left}
+
+/* ===== sealed & fragments v13 ===== */
+.frag-line{margin:30px 0 0;text-align:center;font:9px var(--mono);letter-spacing:.26em;color:#69717c}
+.sealed-lead{max-width:640px;font-size:13.5px;line-height:2.1;color:#c9ccd6}
+.sealed-hints{list-style:none;margin:26px 0;padding:0;max-width:640px}
+.sealed-hints li{padding:11px 4px;border-top:1px dashed rgba(255,255,255,.14);font-size:12.5px;color:#c9ccd6}
+.sealed-hints b{color:var(--red-bright);font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;margin-right:8px}
+.sealed-form{display:flex;gap:12px;max-width:560px;margin-top:10px}
+.sealed-form input{flex:1;background:#0b0c10;border:1px solid rgba(255,255,255,.22);color:var(--paper);font:600 14px var(--mono);letter-spacing:.22em;padding:14px 16px;text-transform:uppercase;outline:none}
+.sealed-form input:focus{border-color:var(--red-bright)}
+.sealed-form button{background:var(--red);color:#fff;border:0;font:600 11px var(--mono);letter-spacing:.2em;padding:0 24px;cursor:pointer;clip-path:polygon(0 0,88% 0,100% 40%,100% 100%,12% 100%,0 60%)}
+.sealed-form button:hover{background:var(--red-bright)}
+.sealed-form.denied{animation:sealedShake .35s steps(3) both}
+@keyframes sealedShake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.sealed-msg{margin-top:14px;font:11px var(--mono);letter-spacing:.18em;color:#ff8089;min-height:16px}
+.sealed-tag{display:inline-block;font:700 10px var(--mono);letter-spacing:.26em;color:#0b0c10;background:#cfe0a8;padding:7px 12px}
+.recovered-title{margin:26px 0 8px;font:800 clamp(30px,4.6vw,52px) var(--display);letter-spacing:.02em;color:var(--paper)}
+.recovered-title span{display:block;margin-top:8px;font:10px var(--mono);letter-spacing:.24em;color:var(--muted)}
+.recovered-msg{margin:22px 0;max-width:680px;padding:20px 22px;border-left:2px solid #B8CDEB;background:rgba(184,205,235,.05);font-size:14.5px;line-height:2.15;color:#dde5f0}
+.recovered-meta{font:10.5px var(--mono);letter-spacing:.16em;line-height:2.1;color:#9fb0c9}

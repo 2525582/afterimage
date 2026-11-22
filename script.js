@@ -104,6 +104,7 @@ const aboutScreen = $("#aboutScreen");
 const worldScreen = $("#worldScreen");
 const promptsScreen = $("#promptsScreen");
 const wantedScreen = $("#wantedScreen");
+const sealedScreen = $("#sealedScreen");
 const wipe = $("#transitionWipe");
 let currentCharacter = null;
 let transitionLock = false;
@@ -172,6 +173,8 @@ function renderProfile(character) {
   $("#profileReading").textContent = safeText(character.reading, "READING / —");
   $("#profileName").innerHTML = `${safeText(character.name).replaceAll(" ", "<br>")}`;
   $("#profileQuote").textContent = safeText(character.quote);
+  const fragEl = $("#profileFragment");
+  if (fragEl) fragEl.textContent = character.id === "004" ? "KEY FRAGMENT 3/3 — 「STILL HERE」" : "";
   $("#profileStamp").textContent = `A—${character.id}`;
   $("#profileTags").innerHTML = "";
   [character.role, `ID ${character.id}`, "ARCHIVE SUBJECT"].forEach((tag) => {
@@ -276,6 +279,8 @@ function returnToIndex() {
 
 $("#enterButton").addEventListener("click", () => {
   playBlip();
+  entryScreen.classList.add("leaving");
+  window.setTimeout(() => entryScreen.classList.remove("leaving"), 1100);
   renderCharacters();
   runTransition("open", () => setScreen(indexScreen));
 });
@@ -288,7 +293,7 @@ document.querySelectorAll("[data-home]").forEach((el) => el.addEventListener("cl
 const menuOverlay = $("#menuOverlay");
 $("#menuTrigger").addEventListener("click", () => menuOverlay.classList.add("open"));
 $("#menuClose").addEventListener("click", () => menuOverlay.classList.remove("open"));
-const navTargets = { entry: entryScreen, index: indexScreen, wanted: wantedScreen, relation: relationScreen, quotes: quotesScreen, gallery: galleryScreen, world: worldScreen, prompts: promptsScreen, about: aboutScreen };
+const navTargets = { entry: entryScreen, index: indexScreen, wanted: wantedScreen, relation: relationScreen, quotes: quotesScreen, gallery: galleryScreen, world: worldScreen, prompts: promptsScreen, sealed: sealedScreen, about: aboutScreen };
 screenKeys.set(entryScreen, "entry");
 screenKeys.set(indexScreen, "index");
 screenKeys.set(profileScreen, "index");
@@ -298,6 +303,7 @@ screenKeys.set(galleryScreen, "gallery");
 screenKeys.set(worldScreen, "world");
 screenKeys.set(promptsScreen, "prompts");
 screenKeys.set(wantedScreen, "wanted");
+screenKeys.set(sealedScreen, "sealed");
 screenKeys.set(aboutScreen, "about");
 menuOverlay.querySelectorAll("[data-nav]").forEach((button) => button.addEventListener("click", () => {
   menuOverlay.classList.remove("open");
@@ -308,6 +314,7 @@ menuOverlay.querySelectorAll("[data-nav]").forEach((button) => button.addEventLi
   if (key === "quotes") renderQuotes();
   if (key === "gallery") renderGallery();
   if (key === "prompts") renderPrompts();
+  if (key === "sealed") renderSealed();
   if (key === "about") updateAbout();
   runTransition(key === "entry" ? "back" : "open", () => setScreen(target));
 }));
@@ -825,6 +832,8 @@ entryScreen.addEventListener("pointermove", (event) => {
   const rect = entryScreen.getBoundingClientRect();
   entryScreen.style.setProperty("--sx", `${((event.clientX - rect.left) / rect.width) * 100}%`);
   entryScreen.style.setProperty("--sy", `${((event.clientY - rect.top) / rect.height) * 100}%`);
+  entryScreen.style.setProperty("--px", (((event.clientX - rect.left) / rect.width) - 0.5).toFixed(3));
+  entryScreen.style.setProperty("--py", (((event.clientY - rect.top) / rect.height) - 0.5).toFixed(3));
 });
 document.addEventListener("keydown", (event) => {
   if (event.key === "Enter" && entryScreen.classList.contains("is-active")) $("#enterButton").click();
@@ -934,3 +943,44 @@ window.setInterval(() => {
   if (!idle) return;
   if (Date.now() - lastActivity > 30000) idle.classList.add("show");
 }, 4000);
+
+/* ===== intro percent & sealed record ===== */
+const introPct = $("#introPct");
+if (introPct) {
+  let pctValue = 0;
+  const pctIv = window.setInterval(() => {
+    pctValue += Math.floor(Math.random() * 9) + 3;
+    if (pctValue >= 100) { pctValue = 100; window.clearInterval(pctIv); }
+    introPct.textContent = `${pctValue}%`;
+  }, 90);
+}
+const SEALED_ANSWER = "SHEISSTILLHERE";
+function renderSealed() {
+  const locked = $("#sealedLocked");
+  const open = $("#sealedOpen");
+  if (!locked || !open) return;
+  const isOpen = localStorage.getItem("afterimage-sealed") === "1";
+  locked.hidden = isOpen;
+  open.hidden = !isOpen;
+}
+function trySealedUnlock() {
+  const input = $("#sealedInput");
+  const msg = $("#sealedMsg");
+  if (!input) return;
+  const value = input.value.toUpperCase().replace(/[\s　]+/g, "");
+  if (value === SEALED_ANSWER) {
+    localStorage.setItem("afterimage-sealed", "1");
+    if (soundOn) playOpenSound();
+    document.body.classList.add("eroding");
+    window.setTimeout(() => document.body.classList.remove("eroding"), 240);
+    renderSealed();
+  } else {
+    if (msg) msg.textContent = "ACCESS DENIED — 鍵が違う";
+    const form = document.querySelector(".sealed-form");
+    if (form) { form.classList.add("denied"); window.setTimeout(() => form.classList.remove("denied"), 350); }
+  }
+}
+const sealedButton = $("#sealedButton");
+if (sealedButton) sealedButton.addEventListener("click", trySealedUnlock);
+const sealedInput = $("#sealedInput");
+if (sealedInput) sealedInput.addEventListener("keydown", (event) => { if (event.key === "Enter") trySealedUnlock(); });

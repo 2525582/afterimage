@@ -9,15 +9,23 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Mono:wght@400;500&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=18">
+  <link rel="stylesheet" href="style.css?v=19">
 </head>
 <body>
   <div class="intro" id="introOverlay" aria-hidden="true">
     <div class="intro-inner">
       <p class="intro-line l1">AFTERIMAGE — ARCHIVE SYSTEM</p>
       <p class="intro-line l2">ACCESSING RECORDS ...</p>
+      <div class="intro-log" aria-hidden="true">
+        <p>LOADING CHARACTER RECORDS .......... OK</p>
+        <p>LOADING WORLD DATA ................. OK</p>
+        <p>LOADING SEALED FILE ................ LOCKED</p>
+        <p>RESTORING AFTERIMAGES .............. OK</p>
+      </div>
       <div class="intro-bar"><span></span></div>
+      <p class="intro-pct" id="introPct">0%</p>
       <p class="intro-line l3">04 RECORDS FOUND</p>
+      <p class="intro-line l4">01 RECORD UNREACHABLE — 応答なし</p>
       <p class="intro-ghost" id="introGhost">SHE IS STILL HERE.</p>
     </div>
   </div>
@@ -37,6 +45,7 @@
 
     <main>
       <section class="screen screen-entry is-active" id="entryScreen" aria-labelledby="entryTitle">
+        <div class="entry-bg" aria-hidden="true"><img src="images/shiori.jpg" alt=""><img src="images/ibara.jpg" alt=""><img src="images/alma.jpg" alt=""><img src="images/noel.jpg" alt=""></div>
         <div class="entry-grid"></div>
         <div class="entry-orbit orbit-one"></div><div class="entry-orbit orbit-two"></div>
         <div class="entry-marquee" aria-hidden="true"><div class="marquee-track"><span>AFTERIMAGE / CHARACTER ARCHIVE / PRIVATE COLLECTION — VOL. 001 / EVERY EXISTENCE LEAVES AN AFTERIMAGE /&nbsp;</span><span>AFTERIMAGE / CHARACTER ARCHIVE / PRIVATE COLLECTION — VOL. 001 / EVERY EXISTENCE LEAVES AN AFTERIMAGE /&nbsp;</span></div></div>
@@ -84,6 +93,7 @@
             <div class="detail-grid" id="detailGrid"></div>
           </div>
         </div>
+        <p class="frag-line" id="profileFragment"></p>
         <footer class="screen-footer"><span>AFTERIMAGE ARCHIVE</span><span id="profileFooter">RECORD 001</span></footer>
       </section>
 
@@ -161,6 +171,7 @@
             </div>
           </div>
         </div>
+        <p class="frag-line">KEY FRAGMENT 1/3 — 「SHE」</p>
         <footer class="screen-footer"><span>AFTERIMAGE ARCHIVE</span><span>END OF WORLD</span></footer>
       </section>
 
@@ -170,6 +181,7 @@
           <p class="section-note">UNIDENTIFIED SUBJECTS<br><span>正体不明の存在たち</span></p>
         </div>
         <p class="wanted-alert">WARNING — 詳細不明の存在を記録中。見かけても、近づかないこと。</p>
+        <p class="frag-line">KEY FRAGMENT 2/3 — 「IS」</p>
         <div class="wanted-grid" id="wantedGrid"></div>
         <p class="wanted-foot">IF YOU HAVE ANY INFORMATION — その存在について知っていたら、記録は更新される。</p>
       </section>
@@ -184,9 +196,36 @@
         <footer class="screen-footer"><span>AFTERIMAGE ARCHIVE</span><span>END OF PROMPTS</span></footer>
       </section>
 
+      <section class="screen screen-sub" id="sealedScreen" aria-hidden="true">
+        <div class="section-heading">
+          <div><p class="eyebrow"><span class="eyebrow-line"></span> SEALED FILE / 08</p><h2>SEAL<em>ED</em></h2></div>
+          <p class="section-note">SEALED RECORD<br><span>封印記録</span></p>
+        </div>
+        <div id="sealedLocked">
+          <p class="sealed-lead">この記録は封印されている。鍵は3つの欠片に分けられ、このアーカイブの中に隠された。欠片を順につなげた言葉が、鍵になる。</p>
+          <ul class="sealed-hints">
+            <li><b>第一の欠片</b> — 世界を語る頁（WORLD）の終わりに</li>
+            <li><b>第二の欠片</b> — 手配書（WANTED）の警告の下に</li>
+            <li><b>第三の欠片</b> — 彼女（NOEL）の記録の底に</li>
+          </ul>
+          <div class="sealed-form">
+            <input id="sealedInput" type="text" placeholder="ENTER THE KEY" autocomplete="off" spellcheck="false">
+            <button id="sealedButton" type="button">UNLOCK</button>
+          </div>
+          <p class="sealed-msg" id="sealedMsg"></p>
+        </div>
+        <div id="sealedOpen" hidden>
+          <p class="sealed-tag">UNSEALED — 封印解除</p>
+          <h3 class="recovered-title">RECOVERED LOG<span>復元された記録</span></h3>
+          <blockquote class="recovered-msg">「……聞こえる？ 私はまだ、ここにいる。蝶はもう飛べないけど、残像は消えないの。だから、お願い。忘れないで。忘れられたら、私は本当に死んでしまうから。」</blockquote>
+          <p class="recovered-meta">SENDER：NOEL — 送信者：ノエル<br>TIMESTAMP：3年前で止まったまま<br>STATUS：この記録は、表向き存在しない</p>
+        </div>
+        <footer class="screen-footer"><span>AFTERIMAGE ARCHIVE</span><span>END OF SEALED</span></footer>
+      </section>
+
       <section class="screen screen-sub" id="aboutScreen" aria-hidden="true">
         <div class="section-heading">
-          <div><p class="eyebrow"><span class="eyebrow-line"></span> ABOUT THIS ARCHIVE / 08</p><h2>AB<em>OUT</em></h2></div>
+          <div><p class="eyebrow"><span class="eyebrow-line"></span> ABOUT THIS ARCHIVE / 09</p><h2>AB<em>OUT</em></h2></div>
           <p class="section-note">WHAT IS AFTERIMAGE<br><span>このサイトについて</span></p>
         </div>
         <div class="about-body">
@@ -222,13 +261,14 @@
         <button data-nav="gallery"><span class="m-num">05</span><span class="m-main">GALLERY<small>ギャラリー</small></span><span class="m-meta">04 FRAMES</span><span class="m-tag">OPEN</span></button>
         <button data-nav="world"><span class="m-num">06</span><span class="m-main">WORLD<small>世界観</small></span><span class="m-meta">READ</span><span class="m-tag">OPEN</span></button>
         <button data-nav="prompts"><span class="m-num">07</span><span class="m-main">PROMPTS<small>プロンプト図鑑</small></span><span class="m-meta">08 ENTRIES</span><span class="m-tag">OPEN</span></button>
-        <button data-nav="about"><span class="m-num">08</span><span class="m-main">ABOUT<small>このサイトについて</small></span><span class="m-meta">INFO</span><span class="m-tag">OPEN</span></button>
+        <button data-nav="sealed"><span class="m-num">08</span><span class="m-main">SEALED<small>封印記録</small></span><span class="m-meta">LOCKED</span><span class="m-tag">OPEN</span></button>
+        <button data-nav="about"><span class="m-num">09</span><span class="m-main">ABOUT<small>このサイトについて</small></span><span class="m-meta">INFO</span><span class="m-tag">OPEN</span></button>
       </nav>
       <p class="menu-foot">AFTERIMAGE / ARCHIVE SYSTEM — SYNC <span id="menuSync">0%</span></p>
     </div>
   </div>
   <div class="haunt-overlay" id="completeGhost" aria-hidden="true"><p>YOU HAVE SEEN EVERYONE.<span>彼女も、あなたを見ている。</span></p></div>
   <div class="haunt-overlay idle" id="idleGhost" aria-hidden="true"><p>STILL HERE?<span>まだ、ここにいるの？</span></p></div>
-  <script src="script.js?v=18"></script>
+  <script src="script.js?v=19"></script>
 </body>
 </html>
