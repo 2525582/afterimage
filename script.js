@@ -85,7 +85,7 @@ function updateSync() {
   if (aboutSync) aboutSync.textContent = pct >= 100 ? "100% — COMPLETE" : `${pct}%`;
   const menuSync = document.querySelector("#menuSync");
   if (menuSync) menuSync.textContent = pct >= 100 ? "100% — COMPLETE" : `${pct}%`;
-  if (window.checkCompleteGhost) window.checkCompleteGhost();
+  window.setTimeout(() => { if (window.checkCompleteGhost) window.checkCompleteGhost(); }, 0);
 }
 function markViewed(id) {
   viewedSet.add(id);
@@ -897,7 +897,7 @@ window.setInterval(() => {
   quote.classList.add("quote-wrong");
   window.setTimeout(() => { quote.textContent = original; quote.classList.remove("quote-wrong"); delete quote.dataset.swapped; }, 450);
 }, 6000);
-let completeGhostShown = false;
+var completeGhostShown = false;
 function checkCompleteGhost() {
   if (completeGhostShown) return;
   if (!characters.length || viewedSet.size < characters.length) return;
