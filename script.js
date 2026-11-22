@@ -900,6 +900,7 @@ window.setInterval(() => {
 function checkCompleteGhost() {
   if (!characters.length || viewedSet.size < characters.length) return;
   if (sessionStorage.getItem("afterimage-complete-shown")) return;
+  if (!document.body.classList.contains("intro-done")) { window.setTimeout(checkCompleteGhost, 1200); return; }
   sessionStorage.setItem("afterimage-complete-shown", "1");
   const ghost = $("#completeGhost");
   if (!ghost) return;
