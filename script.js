@@ -897,11 +897,12 @@ window.setInterval(() => {
   quote.classList.add("quote-wrong");
   window.setTimeout(() => { quote.textContent = original; quote.classList.remove("quote-wrong"); delete quote.dataset.swapped; }, 450);
 }, 6000);
+let completeGhostShown = false;
 function checkCompleteGhost() {
+  if (completeGhostShown) return;
   if (!characters.length || viewedSet.size < characters.length) return;
-  if (sessionStorage.getItem("afterimage-complete-shown")) return;
   if (!document.body.classList.contains("intro-done")) { window.setTimeout(checkCompleteGhost, 1200); return; }
-  sessionStorage.setItem("afterimage-complete-shown", "1");
+  completeGhostShown = true;
   const ghost = $("#completeGhost");
   if (!ghost) return;
   window.setTimeout(() => {
