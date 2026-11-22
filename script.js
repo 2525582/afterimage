@@ -83,6 +83,8 @@ function updateSync() {
   }
   const aboutSync = document.querySelector("#aboutSync");
   if (aboutSync) aboutSync.textContent = pct >= 100 ? "100% — COMPLETE" : `${pct}%`;
+  const aboutSealed = document.querySelector("#aboutSealed");
+  if (aboutSealed) aboutSealed.textContent = localStorage.getItem("afterimage-sealed") === "1" ? "解放済み — UNSEALED" : "封印中 — SEALED";
   const menuSync = document.querySelector("#menuSync");
   if (menuSync) menuSync.textContent = pct >= 100 ? "100% — COMPLETE" : `${pct}%`;
   window.setTimeout(() => { if (window.checkCompleteGhost) window.checkCompleteGhost(); }, 0);
@@ -495,6 +497,12 @@ function renderQuotes() {
     item.innerHTML = `<span class="quote-id">RECORD / ${character.id}</span><span class="quote-text">${safeText(character.quote)}</span><span class="quote-who">${safeText(character.name)}<small>${safeText(character.reading)}</small></span>`;
     item.addEventListener("click", () => openCharacter(character));
     list.appendChild(item);
+    if (character.id === "004") {
+      const hint = document.createElement("p");
+      hint.className = "frag-line";
+      hint.textContent = "この声の続きは、封印の向こうに。";
+      list.appendChild(hint);
+    }
   });
 }
 function renderGallery() {
@@ -974,6 +982,7 @@ function trySealedUnlock() {
     document.body.classList.add("eroding");
     window.setTimeout(() => document.body.classList.remove("eroding"), 240);
     renderSealed();
+    playEnding();
   } else {
     if (msg) msg.textContent = "ACCESS DENIED — 鍵が違う";
     const form = document.querySelector(".sealed-form");
@@ -984,3 +993,21 @@ const sealedButton = $("#sealedButton");
 if (sealedButton) sealedButton.addEventListener("click", trySealedUnlock);
 const sealedInput = $("#sealedInput");
 if (sealedInput) sealedInput.addEventListener("keydown", (event) => { if (event.key === "Enter") trySealedUnlock(); });
+
+/* ===== ending sequence ===== */
+function playEnding() {
+  const overlay = $("#endingOverlay");
+  if (!overlay) return;
+  overlay.hidden = false;
+  overlay.classList.remove("playing");
+  void overlay.offsetWidth;
+  overlay.classList.add("playing");
+  if (soundOn) playOpenSound();
+}
+const endingClose = $("#endingClose");
+if (endingClose) endingClose.addEventListener("click", () => {
+  const overlay = $("#endingOverlay");
+  if (overlay) { overlay.hidden = true; overlay.classList.remove("playing"); }
+});
+const sealedReplay = $("#sealedReplay");
+if (sealedReplay) sealedReplay.addEventListener("click", playEnding);

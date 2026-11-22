@@ -363,3 +363,28 @@ body.intro-done .enter-button{animation:riseIn .8s cubic-bezier(.19,1,.22,1) bot
 .recovered-title span{display:block;margin-top:8px;font:10px var(--mono);letter-spacing:.24em;color:var(--muted)}
 .recovered-msg{margin:22px 0;max-width:680px;padding:20px 22px;border-left:2px solid #B8CDEB;background:rgba(184,205,235,.05);font-size:14.5px;line-height:2.15;color:#dde5f0}
 .recovered-meta{font:10.5px var(--mono);letter-spacing:.16em;line-height:2.1;color:#9fb0c9}
+
+/* ===== ending v14 ===== */
+.ending-overlay{position:fixed;inset:0;z-index:75;background:#04050a;display:flex;align-items:center;justify-content:center;padding:24px}
+.ending-overlay[hidden]{display:none}
+.ending-inner{text-align:center;max-width:640px}
+.ending-kicker{font:700 10px var(--mono);letter-spacing:.34em;color:#8d99ad;margin:0 0 34px;opacity:0}
+.ending-lines p{font-size:16.5px;line-height:1.6;color:#dfe6f2;margin:0 0 20px;opacity:0}
+.ending-key{font:800 clamp(24px,4.6vw,40px) var(--display);letter-spacing:.14em;color:#B8CDEB;margin:36px 0 10px;opacity:0;text-shadow:0 0 24px rgba(184,205,235,.35)}
+.ending-fin{font:700 11px var(--mono);letter-spacing:.34em;color:var(--paper);margin:0 0 26px;opacity:0}
+.ending-credit{font:9.5px var(--mono);letter-spacing:.22em;line-height:2;color:#69717c;margin:0 0 30px;opacity:0}
+.ending-close{background:transparent;border:1px solid rgba(255,255,255,.3);color:var(--paper);font:600 10px var(--mono);letter-spacing:.22em;padding:13px 22px;cursor:pointer;opacity:0}
+.ending-close:hover{border-color:#B8CDEB;color:#B8CDEB}
+.ending-overlay.playing .ending-kicker{animation:endingIn 1s ease .3s forwards}
+.ending-overlay.playing .ending-lines p:nth-child(1){animation:endingIn 1.1s ease 1.2s forwards}
+.ending-overlay.playing .ending-lines p:nth-child(2){animation:endingIn 1.1s ease 2.6s forwards}
+.ending-overlay.playing .ending-lines p:nth-child(3){animation:endingIn 1.1s ease 4s forwards}
+.ending-overlay.playing .ending-lines p:nth-child(4){animation:endingIn 1.1s ease 5.4s forwards}
+.ending-overlay.playing .ending-lines p:nth-child(5){animation:endingIn 1.1s ease 6.8s forwards}
+.ending-overlay.playing .ending-key{animation:endingIn 1.4s ease 8.4s forwards}
+.ending-overlay.playing .ending-fin{animation:endingIn 1s ease 10s forwards}
+.ending-overlay.playing .ending-credit{animation:endingIn 1s ease 10.7s forwards}
+.ending-overlay.playing .ending-close{animation:endingIn 1s ease 11.4s forwards}
+@keyframes endingIn{from{opacity:0;transform:translateY(8px);filter:blur(3px)}to{opacity:1;transform:none;filter:none}}
+.sealed-replay{margin-top:26px;background:transparent;border:1px solid rgba(184,205,235,.4);color:#B8CDEB;font:600 10px var(--mono);letter-spacing:.2em;padding:13px 20px;cursor:pointer}
+.sealed-replay:hover{background:rgba(184,205,235,.08)}

@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Mono:wght@400;500&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=19">
+  <link rel="stylesheet" href="style.css?v=20">
 </head>
 <body>
   <div class="intro" id="introOverlay" aria-hidden="true">
@@ -72,6 +72,7 @@
         </div>
         <div class="index-toolbar"><span id="characterCount">04 RECORDS</span><span class="toolbar-rule"></span><span>ARCHIVE STATUS : <b>OPEN</b></span></div>
         <div class="character-grid" id="characterGrid"></div>
+        <p class="frag-line">3 FRAGMENTS ARE SLEEPING IN THIS ARCHIVE</p>
         <footer class="screen-footer"><span>AFTERIMAGE ARCHIVE</span><span>END OF INDEX</span></footer>
       </section>
 
@@ -108,6 +109,7 @@
             <div class="relation-link"><span>TWIN SISTERS</span><i>双子の姉妹</i></div>
             <button class="relation-node" data-open="004"><span class="rn-id">RECORD / 004</span><b>NOEL</b><small>ノエル</small></button>
             <p class="relation-note">蝶の力を分け合った双子。力の差が、2人の運命を分けた。</p>
+            <p class="frag-line">彼女の声は、まだどこかに残っている。</p>
           </div>
           <div class="relation-pair">
             <button class="relation-node" data-open="001"><span class="rn-id">RECORD / 001</span><b>SHIORI</b><small>西園寺 詩織</small></button>
@@ -219,6 +221,7 @@
           <h3 class="recovered-title">RECOVERED LOG<span>復元された記録</span></h3>
           <blockquote class="recovered-msg">「……聞こえる？ 私はまだ、ここにいる。蝶はもう飛べないけど、残像は消えないの。だから、お願い。忘れないで。忘れられたら、私は本当に死んでしまうから。」</blockquote>
           <p class="recovered-meta">SENDER：NOEL — 送信者：ノエル<br>TIMESTAMP：3年前で止まったまま<br>STATUS：この記録は、表向き存在しない</p>
+          <button class="sealed-replay" id="sealedReplay" type="button">REPLAY ENDING — エンディングをもう一度見る</button>
         </div>
         <footer class="screen-footer"><span>AFTERIMAGE ARCHIVE</span><span>END OF SEALED</span></footer>
       </section>
@@ -231,9 +234,11 @@
         <div class="about-body">
           <p class="about-lead">CHARACTER ARCHIVE — AFTERIMAGE</p>
           <p class="about-text">ぱんだの創作キャラクターを記録する、個人アーカイブ。存在した証は、残像としてここに残り続ける。</p>
+          <p class="about-note">封印された記録が1つある。鍵の欠片は3つ、このアーカイブのどこかに眠っている。</p>
           <div class="about-stats">
             <div><span>RECORDS</span><b id="aboutCount">04</b></div>
             <div><span>ARCHIVE SYNC</span><b id="aboutSync">0%</b></div>
+            <div><span>SEALED FILE</span><b id="aboutSealed">封印中 — SEALED</b></div>
             <div><span>SOUND</span><b>TOPBAR BUTTON</b></div>
           </div>
           <button class="reset-button" id="resetViewed">RESET VIEWED — 見た記録をリセット</button>
@@ -267,8 +272,25 @@
       <p class="menu-foot">AFTERIMAGE / ARCHIVE SYSTEM — SYNC <span id="menuSync">0%</span></p>
     </div>
   </div>
+  <div class="ending-overlay" id="endingOverlay" hidden>
+    <div class="ending-inner">
+      <p class="ending-kicker">UNSEALED RECORD — 封印解除</p>
+      <div class="ending-lines">
+        <p>「……聞こえる？」</p>
+        <p>「私はまだ、ここにいる。」</p>
+        <p>「蝶はもう飛べないけど、残像は消えないの。」</p>
+        <p>「だから、お願い。忘れないで。」</p>
+        <p>「忘れられたら、私は本当に死んでしまうから。」</p>
+      </div>
+      <p class="ending-key">SHE IS STILL HERE.</p>
+      <p class="ending-fin">— ARCHIVE COMPLETE —</p>
+      <p class="ending-credit">CHARACTER ARCHIVE — AFTERIMAGE<br>CREATED BY ぱんだ</p>
+      <button class="ending-close" id="endingClose" type="button">CLOSE — 記録に戻る</button>
+    </div>
+  </div>
+
   <div class="haunt-overlay" id="completeGhost" aria-hidden="true"><p>YOU HAVE SEEN EVERYONE.<span>彼女も、あなたを見ている。</span></p></div>
   <div class="haunt-overlay idle" id="idleGhost" aria-hidden="true"><p>STILL HERE?<span>まだ、ここにいるの？</span></p></div>
-  <script src="script.js?v=19"></script>
+  <script src="script.js?v=20"></script>
 </body>
 </html>
