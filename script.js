@@ -175,6 +175,8 @@ function renderProfile(character) {
   $("#profileReading").textContent = safeText(character.reading, "READING / —");
   $("#profileName").innerHTML = `${safeText(character.name).replaceAll(" ", "<br>")}`;
   $("#profileQuote").textContent = safeText(character.quote);
+  const themeEl = $("#profileTheme");
+  if (themeEl) themeEl.textContent = character.color ? `THEME — ${character.color.toUpperCase()}` : "";
   const fragEl = $("#profileFragment");
   if (fragEl) fragEl.textContent = character.id === "004" ? "KEY FRAGMENT 3/3 — 「STILL HERE」" : "";
   $("#profileStamp").textContent = `A—${character.id}`;

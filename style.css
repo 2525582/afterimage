@@ -395,3 +395,7 @@ body.intro-done .enter-button{animation:riseIn .8s cubic-bezier(.19,1,.22,1) bot
 .sealed-next{margin-top:22px;font:10.5px var(--mono);letter-spacing:.16em;color:#9fb0c9}
 .sealed-next a{color:#B8CDEB;text-decoration:none;border-bottom:1px solid rgba(184,205,235,.5)}
 .sealed-next a:hover{color:#fff}
+
+/* ===== puzzle marks v16 ===== */
+.theme-code{font:9px var(--mono);letter-spacing:.26em;color:#69717c;margin:0 0 10px}
+.tiny-mark{font-size:8px;color:#454b54;letter-spacing:0;margin-left:10px}
