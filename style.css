@@ -388,3 +388,10 @@ body.intro-done .enter-button{animation:riseIn .8s cubic-bezier(.19,1,.22,1) bot
 @keyframes endingIn{from{opacity:0;transform:translateY(8px);filter:blur(3px)}to{opacity:1;transform:none;filter:none}}
 .sealed-replay{margin-top:26px;background:transparent;border:1px solid rgba(184,205,235,.4);color:#B8CDEB;font:600 10px var(--mono);letter-spacing:.2em;padding:13px 20px;cursor:pointer}
 .sealed-replay:hover{background:rgba(184,205,235,.08)}
+
+/* ===== related site link v15 ===== */
+.about-link{color:#B8CDEB;font:700 10.5px var(--mono);letter-spacing:.14em;text-decoration:none;border-bottom:1px solid rgba(184,205,235,.5);margin-left:8px}
+.about-link:hover{color:#fff}
+.sealed-next{margin-top:22px;font:10.5px var(--mono);letter-spacing:.16em;color:#9fb0c9}
+.sealed-next a{color:#B8CDEB;text-decoration:none;border-bottom:1px solid rgba(184,205,235,.5)}
+.sealed-next a:hover{color:#fff}
