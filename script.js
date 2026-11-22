@@ -970,6 +970,8 @@ function renderSealed() {
   const isOpen = localStorage.getItem("afterimage-sealed") === "1";
   locked.hidden = isOpen;
   open.hidden = !isOpen;
+  const meta = $("#menuSealedMeta");
+  if (meta) meta.textContent = isOpen ? "UNSEALED" : "LOCKED";
 }
 function trySealedUnlock() {
   const input = $("#sealedInput");
@@ -1011,3 +1013,4 @@ if (endingClose) endingClose.addEventListener("click", () => {
 });
 const sealedReplay = $("#sealedReplay");
 if (sealedReplay) sealedReplay.addEventListener("click", playEnding);
+renderSealed();
