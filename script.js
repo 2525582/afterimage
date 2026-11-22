@@ -85,6 +85,7 @@ function updateSync() {
   if (aboutSync) aboutSync.textContent = pct >= 100 ? "100% — COMPLETE" : `${pct}%`;
   const menuSync = document.querySelector("#menuSync");
   if (menuSync) menuSync.textContent = pct >= 100 ? "100% — COMPLETE" : `${pct}%`;
+  if (window.checkCompleteGhost) window.checkCompleteGhost();
 }
 function markViewed(id) {
   viewedSet.add(id);
@@ -872,3 +873,62 @@ window.setInterval(() => {
   photo.classList.add("haunted");
   window.setTimeout(() => photo.classList.remove("haunted"), 170);
 }, 4500);
+
+/* ===== hauntings 2 ===== */
+window.setInterval(() => {
+  if (document.hidden || !indexScreen.classList.contains("is-active")) return;
+  if (Math.random() > 0.3) return;
+  const cards = document.querySelectorAll("#characterGrid .character-card");
+  const noelCard = [...cards].find((card) => { const name = card.querySelector(".card-name"); return name && name.textContent.trim() === "NOEL"; });
+  if (!noelCard) return;
+  noelCard.classList.add("vanishing");
+  window.setTimeout(() => noelCard.classList.remove("vanishing"), 650);
+}, 5000);
+window.setInterval(() => {
+  if (document.hidden) return;
+  if (!currentCharacter || currentCharacter.id !== "004") return;
+  if (!profileScreen.classList.contains("is-active")) return;
+  if (Math.random() > 0.25) return;
+  const quote = $("#profileQuote");
+  if (!quote || quote.dataset.swapped) return;
+  const original = quote.textContent;
+  quote.dataset.swapped = "1";
+  quote.textContent = "「……見てる？」";
+  quote.classList.add("quote-wrong");
+  window.setTimeout(() => { quote.textContent = original; quote.classList.remove("quote-wrong"); delete quote.dataset.swapped; }, 450);
+}, 6000);
+function checkCompleteGhost() {
+  if (!characters.length || viewedSet.size < characters.length) return;
+  if (sessionStorage.getItem("afterimage-complete-shown")) return;
+  sessionStorage.setItem("afterimage-complete-shown", "1");
+  const ghost = $("#completeGhost");
+  if (!ghost) return;
+  window.setTimeout(() => {
+    ghost.classList.add("show");
+    window.setTimeout(() => ghost.classList.remove("show"), 3800);
+  }, 600);
+}
+window.setInterval(() => {
+  if (document.hidden || !indexScreen.classList.contains("is-active")) return;
+  if (!characters.length || viewedSet.size < characters.length) return;
+  if (Math.random() > 0.2) return;
+  const grid = $("#characterGrid");
+  if (!grid || grid.querySelector(".ghost-card")) return;
+  const ghost = document.createElement("div");
+  ghost.className = "ghost-card";
+  ghost.innerHTML = `<span class="g-top">RECORD / 005</span><span class="g-q">?</span><span class="g-bottom">UNLOGGED EXISTENCE</span>`;
+  grid.appendChild(ghost);
+  window.setTimeout(() => ghost.remove(), 750);
+}, 9000);
+let lastActivity = Date.now();
+["pointerdown", "pointermove", "keydown", "scroll", "touchstart"].forEach((type) => window.addEventListener(type, () => {
+  lastActivity = Date.now();
+  const idle = $("#idleGhost");
+  if (idle) idle.classList.remove("show");
+}, { passive: true }));
+window.setInterval(() => {
+  if (document.hidden) return;
+  const idle = $("#idleGhost");
+  if (!idle) return;
+  if (Date.now() - lastActivity > 30000) idle.classList.add("show");
+}, 4000);

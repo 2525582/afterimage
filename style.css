@@ -300,3 +300,19 @@ body.intro-done .enter-button{animation:riseIn .8s cubic-bezier(.19,1,.22,1) bot
 .w-facts li{padding:7px 2px;border-top:1px dashed rgba(255,255,255,.13);font-size:12.5px;color:#c9ccd6}
 .w-foot{margin-top:16px;padding-top:12px;border-top:1px solid var(--line);text-align:center;font:10px var(--mono);letter-spacing:.16em;color:#ff8089}
 .wanted-foot{margin-top:30px;text-align:center;font:10.5px var(--mono);letter-spacing:.16em;color:var(--muted)}
+
+/* ===== hauntings v12 ===== */
+.character-card.vanishing{animation:cardVanish .65s steps(5) both}
+@keyframes cardVanish{0%{opacity:1}25%{opacity:.25;filter:blur(2px) grayscale(.6);transform:translateX(-3px)}50%{opacity:.05;filter:blur(4px)}75%{opacity:.4;filter:blur(1px)}100%{opacity:1;filter:none;transform:none}}
+.profile-quote.quote-wrong{color:#ff8089;border-left-color:#ff5560}
+.ghost-card{position:relative;min-height:430px;background:#07080b;border:1px dashed rgba(237,70,85,.4);display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:26px 18px;pointer-events:none;animation:ghostFlicker .75s steps(4) both;clip-path:polygon(0 0,94% 0,100% 6%,100% 100%,0 100%)}
+.ghost-card .g-top,.ghost-card .g-bottom{font:9px var(--mono);letter-spacing:.2em;color:#ff8089}
+.ghost-card .g-q{font:800 110px var(--display);color:rgba(237,70,85,.28)}
+@keyframes ghostFlicker{0%{opacity:0}15%{opacity:.9}30%{opacity:.15}45%{opacity:.8}70%{opacity:.3}100%{opacity:0}}
+.haunt-overlay{position:fixed;inset:0;z-index:58;display:grid;place-items:center;background:rgba(2,2,4,.55);opacity:0;visibility:hidden;transition:opacity 1.6s ease,visibility 1.6s;pointer-events:none}
+.haunt-overlay.show{opacity:1;visibility:visible}
+.haunt-overlay p{text-align:center;font:700 clamp(17px,3.4vw,30px) var(--mono);letter-spacing:.34em;color:#e8ecf3;margin:0;padding:0 20px}
+.haunt-overlay p span{display:block;margin-top:16px;font-size:12px;letter-spacing:.3em;color:#9fb0c9}
+#completeGhost p{color:#ffb3b9}
+#completeGhost p span{color:#ff8089}
+.haunt-overlay.idle{transition:opacity 3.5s ease,visibility 3.5s}
