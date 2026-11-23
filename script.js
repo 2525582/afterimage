@@ -1016,3 +1016,8 @@ if (endingClose) endingClose.addEventListener("click", () => {
 const sealedReplay = $("#sealedReplay");
 if (sealedReplay) sealedReplay.addEventListener("click", playEnding);
 renderSealed();
+
+/* ===== redactions (v24) ===== */
+document.querySelectorAll(".blackout").forEach(function (el) {
+  el.addEventListener("click", function () { el.classList.add("open"); });
+});
